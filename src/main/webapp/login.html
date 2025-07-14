@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pahana Edu Billing System - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background: linear-gradient(120deg, #f5f8fa 60%, #007bff 100%); font-family: 'Segoe UI', Arial, sans-serif; min-height: 100vh; }
+    .container { max-width: 400px; margin: 100px auto 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); padding: 40px 32px 32px 32px; text-align: center; }
+    h2 { color: #007bff; margin-bottom: 36px; font-size: 2rem; }
+    .login-options { display: flex; flex-direction: column; gap: 24px; }
+    .btn { padding: 16px; font-size: 18px; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,123,255,0.08); font-weight: 600; }
+    .btn-admin { background: #007bff; color: #fff; }
+    .btn-admin:hover { background: #0056b3; }
+    .btn-staff { background: #e9ecef; color: #007bff; }
+    .btn-staff:hover { background: #cce0ff; }
+  </style>
+  <script>
+    function goToAdminLogin() { window.location.href = "admin_login.jsp"; }
+    function goToStaffLogin() { window.location.href = "staff_login.jsp"; }
+  </script>
+</head>
+<body>
+<div class="container">
+  <h2>Pahana Edu Billing System</h2>
+  <div class="login-options">
+    <button class="btn btn-admin" onclick="goToAdminLogin()">Admin Login</button>
+    <button class="btn btn-staff" onclick="goToStaffLogin()">Staff Login</button>
+  </div>
+</div>
+</body>
+</html>
