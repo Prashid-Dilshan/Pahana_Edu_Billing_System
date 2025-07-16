@@ -35,4 +35,38 @@
     <welcome-file-list>
         <welcome-file>login.html</welcome-file>
     </welcome-file-list>
+
+
+    <servlet>
+        <servlet-name>Admin_ViewStaffServlet</servlet-name>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.Admin_ViewStaffServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Admin_ViewStaffServlet</servlet-name>
+        <url-pattern>/Admin_ViewStaffServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>Admin_DeleteStaffServlet</servlet-name>
+        <servlet-class>com.example.pahana_edu_billing_system.controller.Admin_DeleteStaffServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Admin_DeleteStaffServlet</servlet-name>
+        <url-pattern>/Admin_DeleteStaffServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Admin_EditStaffServlet</servlet-name>
+        <servlet-class>com.example.pahana_edu_billing_system.controller.Admin_EditStaffServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Admin_EditStaffServlet</servlet-name>
+        <url-pattern>/Admin_EditStaffServlet</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Pahana Edu Billing System - Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet">
   <style>
-    body { background: linear-gradient(120deg, #f5f8fa 60%, #007bff 100%); font-family: 'Segoe UI', Arial, sans-serif; min-height: 100vh; }
-    .container { max-width: 400px; margin: 100px auto 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); padding: 40px 32px 32px 32px; text-align: center; }
-    h2 { color: #007bff; margin-bottom: 36px; font-size: 2rem; }
-    .login-options { display: flex; flex-direction: column; gap: 24px; }
-    .btn { padding: 16px; font-size: 18px; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,123,255,0.08); font-weight: 600; }
-    .btn-admin { background: #007bff; color: #fff; }
-    .btn-admin:hover { background: #0056b3; }
-    .btn-staff { background: #e9ecef; color: #007bff; }
-    .btn-staff:hover { background: #cce0ff; }
+    body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
   </style>
-  <script>
-    function goToAdminLogin() { window.location.href = "admin_login.jsp"; }
-    function goToStaffLogin() { window.location.href = "staff_login.jsp"; }
-  </script>
 </head>
-<body>
-<div class="container">
-  <h2>Pahana Edu Billing System</h2>
-  <div class="login-options">
-    <button class="btn btn-admin" onclick="goToAdminLogin()">Admin Login</button>
-    <button class="btn btn-staff" onclick="goToStaffLogin()">Staff Login</button>
+<body class="bg-gradient-to-br from-gray-100 via-blue-50 to-blue-400 min-h-screen flex items-center justify-center">
+<div class="w-full max-w-sm bg-white rounded-3xl shadow-xl px-8 py-10 flex flex-col items-center">
+  <svg class="w-14 h-14 text-blue-600 mb-4" fill="none" viewBox="0 0 48 48" stroke="currentColor">
+    <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#E3F0FF" />
+    <path d="M18 24a6 6 0 1 1 12 0 6 6 0 0 1 -12 0zM10 38c0-4 8-6 14-6s14 2 14 6v2H10v-2z" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+  <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">Pahana Edu Billing System</h2>
+  <p class="text-gray-400 text-xs mb-8 text-center italic">Please choose your login type</p>
+  <div class="flex flex-col gap-6 w-full">
+    <a href="admin_login.jsp"
+       class="transition-all duration-150 border-none rounded-lg px-5 py-3 text-lg font-semibold bg-blue-600 text-white shadow-md hover:bg-blue-700 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center gap-2 justify-center">
+      <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 12c2.5 0 8 1.25 8 3.75V20H4v-4.25C4 13.25 9.5 12 12 12Z"/><circle cx="12" cy="7" r="4"/></svg>
+      Admin Login
+    </a>
+    <a href="staff_login.jsp"
+       class="transition-all duration-150 border-none rounded-lg px-5 py-3 text-lg font-semibold bg-white text-blue-700 border-2 border-blue-200 shadow hover:bg-blue-50 hover:border-blue-400 hover:text-blue-900 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-300 flex items-center gap-2 justify-center">
+      <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 10.5a5 5 0 1 1-10 0 5 5 0 0 1 10 0ZM2 20a9 9 0 0 1 20 0v2H2v-2Z"/></svg>
+      Staff Login
+    </a>
   </div>
 </div>
 </body>
