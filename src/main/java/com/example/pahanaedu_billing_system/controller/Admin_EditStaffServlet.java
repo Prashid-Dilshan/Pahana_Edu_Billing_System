@@ -1,7 +1,7 @@
 package com.example.pahanaedu_billing_system.controller;
 
 
-import com.example.pahana_edu_billing_system.dao.StaffDAO;
+import com.example.pahanaedu_billing_system.dao.StaffDAO;
 import com.example.pahana_edu_billing_system.model.Staff;
 
 import jakarta.servlet.*;

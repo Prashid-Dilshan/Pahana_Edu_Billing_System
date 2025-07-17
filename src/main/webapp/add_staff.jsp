@@ -13,7 +13,8 @@
   </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-blue-50 to-blue-400 min-h-screen flex items-center justify-center">
-<div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl px-0 py-0 md:flex">
+
+<div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl px-0 py-0 md:flex my-12">
   <!-- Left: Logo & Title -->
   <div class="hidden md:flex flex-col items-center justify-center bg-blue-50 rounded-l-3xl py-14 px-10 w-2/5">
     <svg class="w-16 h-16 text-blue-500 mb-6" fill="none" viewBox="0 0 48 48">
@@ -23,7 +24,6 @@
     <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">Add New Staff Member</h2>
     <span class="text-sm text-gray-400 text-center mb-2">Pahana Edu Billing System</span>
   </div>
-
   <!-- Right: Form -->
   <div class="w-full md:w-3/5 py-10 px-6 md:px-12">
     <div class="md:hidden flex flex-col items-center mb-5">
@@ -34,6 +34,19 @@
       <h2 class="text-xl font-bold text-blue-700 mb-1 text-center">Add New Staff Member</h2>
       <span class="text-xs text-gray-400 text-center mb-4">Pahana Edu Billing System</span>
     </div>
+
+    <!-- Success and Error Messages -->
+    <% if (request.getAttribute("message") != null) { %>
+    <div class="w-full mb-4 bg-green-100 text-green-800 border border-green-400 rounded-lg px-4 py-2 text-center">
+      <strong><%= request.getAttribute("message") %></strong>
+    </div>
+    <% } %>
+    <% if (request.getAttribute("error") != null) { %>
+    <div class="w-full mb-4 bg-red-100 text-red-700 border border-red-400 rounded-lg px-4 py-2 text-center">
+      <%= request.getAttribute("error") %>
+    </div>
+    <% } %>
+
     <form action="addStaff" method="post" class="space-y-4">
       <div class="flex md:items-center gap-4">
         <label for="staffid" class="block w-36 shrink-0 font-semibold text-gray-700">Staff ID</label>
@@ -70,20 +83,12 @@
         Add Staff
       </button>
     </form>
-
-    <!-- Success and Error Messages -->
-    <% if (request.getAttribute("message") != null) { %>
-    <div class="text-green-600 text-center font-semibold mt-4"><%= request.getAttribute("message") %></div>
-    <% } %>
-    <% if (request.getAttribute("error") != null) { %>
-    <div class="text-red-600 text-center font-semibold mt-4"><%= request.getAttribute("error") %></div>
-    <% } %>
-
-    <a href="admin_dashboard.html"
-       class="block mt-8 text-blue-700 text-center font-medium hover:underline hover:text-blue-800 transition">
-      &larr; Back to Admin Dashboard
-    </a>
   </div>
 </div>
+
+<a href="admin_dashboard.html"
+   class="fixed bottom-7 left-7 bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-2xl text-base font-semibold shadow transition">
+  ← Back to Admin Dashboard
+</a>
 </body>
 </html>
