@@ -12,36 +12,44 @@
   </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-blue-50 to-blue-400 min-h-screen flex flex-col items-center justify-center">
-<div class="w-full max-w-xl bg-white rounded-3xl shadow-2xl px-10 py-12 flex flex-col items-center">
-  <svg class="w-14 h-14 text-blue-600 mb-5" fill="none" viewBox="0 0 48 48">
-    <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#E3F0FF"/>
-    <path d="M18 24a6 6 0 1 1 12 0 6 6 0 0 1 -12 0zM10 38c0-4 8-6 14-6s14 2 14 6v2H10v-2z" stroke="#007BFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+<div class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl px-10 py-12 flex flex-col items-center">
+  <svg class="w-14 h-14 text-orange-400 mb-5" fill="none" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#FFEDD5"/>
+    <path d="M18 24a6 6 0 1 1 12 0 6 6 0 0 1 -12 0zM10 38c0-4 8-6 14-6s14 2 14 6v2H10v-2z" stroke="#F59E42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-  <h2 class="text-2xl font-bold text-blue-700 mb-1">Welcome, Admin</h2>
-  <span class="text-xs text-gray-400 mb-8">Pahana Edu Billing System</span>
-  <div class="flex flex-col md:grid md:grid-cols-2 gap-5 w-full items-center">
-    <!-- Staff Management -->
-    <a class="w-full transition bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
-       href="add_staff.jsp">
-      Add Staff Member
+  <h2 class="text-2xl font-bold text-orange-700 mb-1 text-center">Welcome, Admin!</h2>
+  <span class="text-xs text-gray-400 mb-8 text-center">Pahana Edu Billing System</span>
+
+  <!-- Responsive Grid: 2 columns on md+, 1 column on mobile -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+    <!-- Row 1 -->
+    <a href="add_staff.jsp"
+       class="transition bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center">
+      👤 Add Staff Member
     </a>
-    <a class="w-full transition bg-white border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-300 text-blue-700 py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-blue-300"
-       href="Admin_ViewStaffServlet">
-      View Staff
+    <a href="Admin_ViewStaffServlet"
+       class="transition bg-white border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-300 text-blue-700 py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-blue-300 flex items-center justify-center">
+       View Staff
     </a>
-    <!-- Book Management -->
-    <a class="w-full transition bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-green-400"
-       href="admin_add_book.jsp">
-      Add Book
+    <!-- Row 2 -->
+    <a href="admin_add_book.jsp"
+       class="transition bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center justify-center">📖 Add Book
     </a>
-    <a class="w-full transition bg-white border-2 border-green-200 hover:bg-green-50 hover:border-green-300 text-green-700 py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-green-300"
-       href="Admin_ViewBooksServlet">
-      View Books
+    <a href="Admin_ViewBooksServlet"
+       class="transition bg-white border-2 border-green-200 hover:bg-green-50 hover:border-green-300 text-green-700 py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-green-300 flex items-center justify-center">
+       View Books
+    </a>
+    <!-- Row 3: single full-width cell -->
+    <a href="AdminManageCustomerServlet"
+       class="md:col-span-2 transition bg-yellow-500 hover:bg-yellow-600 text-white py-4 rounded-xl text-lg font-semibold shadow text-center focus:outline-none focus:ring-2 focus:ring-yellow-400 flex items-center justify-center">
+      👤 Manage Customers
     </a>
   </div>
 </div>
-<a class="fixed bottom-7 right-7 bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-2xl text-lg font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-red-400"
-   href="login.html">
+
+<a href="login.html"
+   class="fixed bottom-7 right-7 bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-2xl text-lg font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-red-400">
   Logout
 </a>
 </body>
