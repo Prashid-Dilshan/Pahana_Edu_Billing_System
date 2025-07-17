@@ -9,46 +9,58 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet"/>
-    <style>body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }</style>
+    <style>
+        body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-blue-200 min-h-screen px-2 py-8">
+<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-blue-200 min-h-screen flex flex-col items-center justify-center">
 
-<div class="max-w-5xl bg-white mx-auto rounded-3xl shadow-2xl p-8">
-    <h2 class="text-2xl md:text-3xl font-bold text-blue-700 mb-7 flex items-center gap-3">
-        <svg class="w-7 h-7 text-blue-400" fill="none" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#E3F0FF"/>
-            <path d="M17 21a5 5 0 1 1 10 0 5 5 0 0 1-10 0ZM10 39c0-3.5 7.5-6 14-6s14 2.5 14 6v1H10v-1Z" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Staff Members List
-    </h2>
+<div class="w-full max-w-5xl bg-white rounded-3xl shadow-xl px-8 py-10 flex flex-col items-center mb-10">
 
-    <%
-        List<Staff> staffList = (List<Staff>) request.getAttribute("staffList");
-        if (staffList != null && !staffList.isEmpty()) {
-    %>
-    <div class="overflow-x-auto rounded-2xl">
-        <table class="min-w-full border">
+    <svg class="w-14 h-14 text-blue-400 mb-5" fill="none" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#E3F0FF"/>
+        <path d="M17 21a5 5 0 1 1 10 0 5 5 0 0 1-10 0ZM10 39c0-3.5 7.5-6 14-6s14 2.5 14 6v1H10v-1Z"
+              stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h2 class="text-2xl md:text-3xl font-bold text-blue-700 mb-2 text-center">Staff Members List</h2>
+    <span class="text-xs text-gray-400 mb-8 text-center">Pahana Edu Billing System - Admin</span>
+
+    <%-- Success/Error message area --%>
+    <% if (request.getAttribute("message") != null) { %>
+    <div class="w-full mb-4 bg-green-100 text-green-800 border border-green-400 rounded-lg px-4 py-2 text-center">
+        <strong><%= request.getAttribute("message") %></strong>
+    </div>
+    <% } else if (request.getAttribute("error") != null) { %>
+    <div class="w-full mb-4 bg-red-100 text-red-700 border border-red-400 rounded-lg px-4 py-2 text-center">
+        <%= request.getAttribute("error") %>
+    </div>
+    <% } %>
+
+    <div class="w-full overflow-x-auto rounded-2xl border border-gray-200 shadow">
+        <table class="min-w-full bg-white rounded-lg">
             <thead>
-            <tr class="bg-blue-600 text-white text-base">
-                <th class="py-3 px-5 font-semibold">Staff ID</th>
-                <th class="py-3 px-5 font-semibold">Name</th>
-                <th class="py-3 px-5 font-semibold">Address</th>
-                <th class="py-3 px-5 font-semibold">Mobile</th>
-                <th class="py-3 px-5 font-semibold">Username</th>
-                <th class="py-3 px-5 font-semibold">Actions</th>
+            <tr class="bg-blue-100 text-blue-900 text-base">
+                <th class="px-5 py-3 font-semibold text-center">Staff ID</th>
+                <th class="px-5 py-3 font-semibold text-center">Name</th>
+                <th class="px-5 py-3 font-semibold text-center">Address</th>
+                <th class="px-5 py-3 font-semibold text-center">Mobile</th>
+                <th class="px-5 py-3 font-semibold text-center">Username</th>
+                <th class="px-5 py-3 font-semibold text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
             <%
-                for (Staff s : staffList) {
+                List<Staff> staffList = (List<Staff>) request.getAttribute("staffList");
+                if (staffList != null && !staffList.isEmpty()) {
+                    for (Staff s : staffList) {
             %>
-            <tr class="even:bg-blue-50 hover:bg-blue-100 transition">
-                <td class="py-2 px-4"><%= s.getStaffid() %></td>
-                <td class="py-2 px-4"><%= s.getName() %></td>
-                <td class="py-2 px-4"><%= s.getAddress() %></td>
-                <td class="py-2 px-4"><%= s.getMobilenumber() %></td>
-                <td class="py-2 px-4"><%= s.getUsername() %></td>
-                <td class="py-2 px-4">
+            <tr class="hover:bg-gray-100">
+                <td class="px-5 py-3 text-center"><%= s.getStaffid() %></td>
+                <td class="px-5 py-3 text-center"><%= s.getName() %></td>
+                <td class="px-5 py-3 text-center"><%= s.getAddress() %></td>
+                <td class="px-5 py-3 text-center"><%= s.getMobilenumber() %></td>
+                <td class="px-5 py-3 text-center"><%= s.getUsername() %></td>
+                <td class="px-5 py-3 text-center">
                     <form action="edit_staff.jsp" method="get" class="inline">
                         <input type="hidden" name="staffid" value="<%= s.getStaffid() %>" />
                         <input type="hidden" name="name" value="<%= s.getName() %>" />
@@ -67,23 +79,24 @@
             </tr>
             <%
                 }
+            } else {
+            %>
+            <tr>
+                <td colspan="6" class="px-5 py-8 text-center text-gray-400 text-base">
+                    No staff records found or staff list not loaded.
+                </td>
+            </tr>
+            <%
+                }
             %>
             </tbody>
         </table>
     </div>
-    <%
-    } else {
-    %>
-    <p class="text-red-600 text-lg font-semibold mt-7 flex items-center gap-2">
-        <span>❌</span> No staff records found or staff list not loaded.
-    </p>
-    <%
-        }
-    %>
-    <a href="admin_dashboard.html"
-       class="inline-block mt-8 text-blue-700 font-medium hover:underline hover:text-blue-900 transition text-base">
-        &larr; Back to Admin Dashboard
-    </a>
 </div>
+
+<a href="admin_dashboard.html"
+   class="fixed bottom-7 left-7 bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-2xl text-base font-semibold shadow transition">
+    ← Back to Admin Dashboard
+</a>
 </body>
 </html>
