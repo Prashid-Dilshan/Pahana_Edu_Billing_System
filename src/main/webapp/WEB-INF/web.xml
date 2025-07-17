@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.example.pahana_edu_billing_system.controller.LoginServlet</servlet-class>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -16,7 +16,7 @@
 
     <servlet>
         <servlet-name>AddStaffServlet</servlet-name>
-        <servlet-class>com.example.pahana_edu_billing_system.controller.AddStaffServlet</servlet-class>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.AddStaffServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddStaffServlet</servlet-name>
@@ -25,7 +25,7 @@
 
     <servlet>
         <servlet-name>StaffLoginServlet</servlet-name>
-        <servlet-class>com.example.pahana_edu_billing_system.controller.StaffLoginServlet</servlet-class>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.StaffLoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>StaffLoginServlet</servlet-name>
@@ -50,7 +50,7 @@
 
     <servlet>
         <servlet-name>Admin_DeleteStaffServlet</servlet-name>
-        <servlet-class>com.example.pahana_edu_billing_system.controller.Admin_DeleteStaffServlet</servlet-class>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.Admin_DeleteStaffServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -60,13 +60,18 @@
 
     <servlet>
         <servlet-name>Admin_EditStaffServlet</servlet-name>
-        <servlet-class>com.example.pahana_edu_billing_system.controller.Admin_EditStaffServlet</servlet-class>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.Admin_EditStaffServlet</servlet-class>
     </servlet>
+
+
 
     <servlet-mapping>
         <servlet-name>Admin_EditStaffServlet</servlet-name>
         <url-pattern>/Admin_EditStaffServlet</url-pattern>
     </servlet-mapping>
+
+
+
 
 
 </web-app>

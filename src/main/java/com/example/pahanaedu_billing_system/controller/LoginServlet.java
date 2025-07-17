@@ -1,4 +1,4 @@
-package com.example.pahana_edu_billing_system.controller;
+package com.example.pahanaedu_billing_system.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
