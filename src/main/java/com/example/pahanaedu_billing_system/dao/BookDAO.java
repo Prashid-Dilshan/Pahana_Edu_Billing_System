@@ -47,7 +47,32 @@ public class BookDAO {
                         rs.getString("author"),
                         rs.getDouble("price"),
                         rs.getInt("stockbookcount"),
-                        rs.getBytes("bookphoto") // photo as byte[]
+                        rs.getBytes("bookphoto")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+    /** SEARCH BOOKS BY TITLE OR AUTHOR */
+    public List<Book> searchBooksByTitleOrAuthor(String query) {
+        List<Book> books = new ArrayList<>();
+        String sql = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            String wildcard = "%" + query + "%";
+            stmt.setString(1, wildcard);
+            stmt.setString(2, wildcard);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                books.add(new Book(
+                        rs.getString("bookid"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getDouble("price"),
+                        rs.getInt("stockbookcount"),
+                        rs.getBytes("bookphoto")
                 ));
             }
         } catch (SQLException e) {
