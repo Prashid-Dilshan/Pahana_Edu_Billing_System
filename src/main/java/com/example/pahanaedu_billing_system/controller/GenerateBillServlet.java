@@ -1,55 +1,58 @@
 package com.example.pahanaedu_billing_system.controller;
 
 import com.example.pahanaedu_billing_system.model.*;
-import com.example.pahanaedu_billing_system.dao.BillDAO;
+import com.example.pahanaedu_billing_system.dao.CustomerDAO;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
+@WebServlet("/GenerateBillServlet")
 public class GenerateBillServlet extends HttpServlet {
-    private BillDAO billDAO = new BillDAO();
+
+    private final CustomerDAO customerDAO = new CustomerDAO(); // ✅ CustomerDAO instance
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        String customerId = request.getParameter("customerId");
 
-        if (cart == null || cart.isEmpty() || customerId == null) {
+        // 🛒 Retrieve cart from session
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        String customerIdParam = request.getParameter("customerId");
+
+        // ✅ Validate inputs
+        if (cart == null || cart.isEmpty() || customerIdParam == null || customerIdParam.isEmpty()) {
             response.sendRedirect("staff_cart.jsp");
             return;
         }
 
-        Bill bill = new Bill();
-        bill.setCustomerId(customerId);
-        bill.setDateTime(LocalDateTime.now());
+        try {
+            int customerId = Integer.parseInt(customerIdParam);
 
-        double total = 0;
-        List<BillItem> items = new ArrayList<>();
+            // ✅ Fetch full customer object
+            Customer customer = customerDAO.getCustomerById(customerId);
+            if (customer == null) {
+                response.getWriter().println("❌ Customer not found.");
+                return;
+            }
 
-        for (CartItem item : cart) {
-            BillItem bItem = new BillItem();
-            bItem.setBookId(item.getBookId());
-            bItem.setPrice(item.getPrice());
-            bItem.setQuantity(item.getQuantity());
-            total += item.getTotalPrice();
-            items.add(bItem);
-        }
+            // ✅ Store everything in session for preview page
+            session.setAttribute("selectedCustomerId", customerId);
+            session.setAttribute("selectedCustomer", customer);
+            session.setAttribute("cart", cart);
 
-        bill.setTotal(total);
-        bill.setItems(items);
+            // ✅ Redirect to preview page
+            response.sendRedirect("staff_final_bill_details.jsp");
 
-        boolean success = billDAO.saveBill(bill);
-        if (success) {
-            session.removeAttribute("cart");
-            response.sendRedirect("bill_success.jsp");
-        } else {
-            response.getWriter().println("❌ Failed to generate bill.");
+        } catch (NumberFormatException e) {
+            response.getWriter().println("❌ Invalid customer ID format.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.getWriter().println("❌ An unexpected error occurred.");
         }
     }
 }
