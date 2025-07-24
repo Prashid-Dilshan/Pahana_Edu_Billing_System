@@ -5,23 +5,61 @@ import java.util.List;
 
 public class Bill {
     private int billId;
-    private String customerId;
+    private int customerId; // ✅ Changed from String to int
     private double total;
     private LocalDateTime dateTime;
     private List<BillItem> items;
 
-    public int getBillId() { return billId; }
-    public void setBillId(int billId) { this.billId = billId; }
+    // Optional: Customer object for detailed views
+    private Customer customer;
 
-    public String getCustomerId() { return customerId; }
-    public void setCustomerId(String customerId) { this.customerId = customerId; }
+    // --- Getters & Setters ---
 
-    public double getTotal() { return total; }
-    public void setTotal(double total) { this.total = total; }
+    public int getBillId() {
+        return billId;
+    }
 
-    public LocalDateTime getDateTime() { return dateTime; }
-    public void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime; }
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
 
-    public List<BillItem> getItems() { return items; }
-    public void setItems(List<BillItem> items) { this.items = items; }
+    public int getCustomerId() {  // ✅ Updated to int
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {  // ✅ Updated to int
+        this.customerId = customerId;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public List<BillItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<BillItem> items) {
+        this.items = items;
+    }
+
+    public Customer getCustomer() {  // ✅ For displaying detailed info
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }
