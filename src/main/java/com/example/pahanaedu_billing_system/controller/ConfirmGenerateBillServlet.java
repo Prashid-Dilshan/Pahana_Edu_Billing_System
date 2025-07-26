@@ -4,11 +4,14 @@ import com.example.pahanaedu_billing_system.model.*;
 import com.example.pahanaedu_billing_system.dao.BillDAO;
 import com.example.pahanaedu_billing_system.dao.BookDAO;
 import com.example.pahanaedu_billing_system.dao.CustomerDAO;
+import com.example.pahanaedu_billing_system.util.EmailUtil;
+import com.example.pahanaedu_billing_system.util.PDFGeneratorUtil;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import java.io.IOException;
+
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -37,9 +40,9 @@ public class ConfirmGenerateBillServlet extends HttpServlet {
             bill.setCustomerId(customerId);
             bill.setDateTime(LocalDateTime.now());
 
-            // Load full customer object
+            // ✅ Load customer details
             Customer customer = customerDAO.getCustomerById(customerId);
-            bill.setCustomer(customer);  // 🟢 This allows PDF to access full customer data
+            bill.setCustomer(customer);
 
             double total = 0;
             List<BillItem> items = new ArrayList<>();
@@ -50,9 +53,8 @@ public class ConfirmGenerateBillServlet extends HttpServlet {
                 bItem.setPrice(item.getPrice());
                 bItem.setQuantity(item.getQuantity());
 
-                // Load and set full book object
                 Book book = bookDAO.getBookById(item.getBookId());
-                bItem.setBook(book);  // 🟢 So PDF can show book title
+                bItem.setBook(book);
 
                 total += item.getTotalPrice();
                 items.add(bItem);
@@ -63,21 +65,45 @@ public class ConfirmGenerateBillServlet extends HttpServlet {
 
             boolean success = billDAO.saveBill(bill);
             if (success) {
+                // ✅ Clear session
                 session.removeAttribute("cart");
                 session.removeAttribute("selectedCustomerId");
                 session.removeAttribute("selectedCustomer");
 
-                // ✅ Store generated bill for later PDF + SMS
+                // ✅ Store bill in session
                 session.setAttribute("generatedBill", bill);
 
-                response.sendRedirect("bill_success.jsp");
+                // ✅ Step 1: Generate PDF
+                String pdfPath = getServletContext().getRealPath("/") + "Bill_" + bill.getBillId() + ".pdf";
+                File pdfFile = new File(pdfPath);
+                try (OutputStream out = new FileOutputStream(pdfFile)) {
+                    PDFGeneratorUtil.generatePDF(bill, out);
+                }
+
+                // ✅ Step 2: Email PDF to customer
+                String toEmail = customer.getEmail();
+                String message = "Dear " + customer.getName() + ",\n\nThank you for your purchase at Pahana Edu Bookshop. Please find your bill attached.\n\nBest regards,\nPahana Edu Book Shop";
+
+                boolean emailSent = EmailUtil.sendEmailWithAttachment(
+                        toEmail,
+                        "Your Bill - Pahana Edu Bookshop",
+                        message,
+                        pdfFile
+                );
+
+                // ✅ Final response
+                if (emailSent) {
+                    response.sendRedirect("bill_success.jsp");
+                } else {
+                    response.getWriter().println("⚠️ Bill saved, but email sending failed.");
+                }
             } else {
                 response.getWriter().println("❌ Bill generation failed.");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().println("❌ Unexpected error occurred.");
+            response.getWriter().println("❌ Unexpected error occurred: " + e.getMessage());
         }
     }
 }
