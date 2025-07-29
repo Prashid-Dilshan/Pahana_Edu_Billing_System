@@ -35,7 +35,7 @@
         }
     %>
 
-    <form action="addCustomer" method="post" class="w-full">
+    <form action="AddCustomerServlet?action=add" method="post" class="w-full">
         <div class="mb-4">
             <label class="block text-gray-700">Name<span class="text-red-500">*</span>:</label>
             <input type="text" name="name" required class="w-full px-3 py-2 border-2 border-blue-200 rounded-lg focus:outline-none focus:border-blue-500"/>
