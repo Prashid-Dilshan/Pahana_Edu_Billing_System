@@ -41,7 +41,7 @@
     <%
         }
     %>
-    <form action="EditCustomerServlet" method="post" class="w-full mt-2">
+    <form action="AddCustomerServlet?action=edit" method="post" class="w-full mt-2">
         <!-- Hidden field for ID -->
         <input type="hidden" name="customerid" value="<%= customer != null ? customer.getCustomerid() : "" %>"/>
         <div class="mb-4">
@@ -75,7 +75,7 @@
     </form>
 </div>
 
-<a href="viewCustomers"
+<a href="AddCustomerServlet?action=view"
    class="fixed bottom-7 left-7 bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-2xl text-base font-semibold shadow transition">
     ← Back to Customer List
 </a>
