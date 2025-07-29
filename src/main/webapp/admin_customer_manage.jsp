@@ -24,7 +24,7 @@
     <span class="text-xs text-gray-400 mb-8 text-center">Pahana Edu Billing System</span>
 
     <!-- Search form -->
-    <form action="AdminManageCustomerServlet" method="get" class="flex mb-8 w-full justify-center">
+    <form action="AddCustomerServlet?action=view" method="get" class="flex mb-8 w-full justify-center">
         <input
                 type="text"
                 name="search"
@@ -39,7 +39,7 @@
         <%
             if (request.getAttribute("search") != null && !((String)request.getAttribute("search")).isEmpty()) {
         %>
-        <a href="AdminManageCustomerServlet"
+        <a href="AddCustomerServlet?action=view"
            class="ml-3 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-800 font-semibold transition">Clear</a>
         <%
             }
@@ -51,6 +51,9 @@
         <strong><%= msg %></strong>
     </div>
     <% session.removeAttribute("msg"); } %>
+
+    <!-- Add Customer button removed as per your request -->
+
     <div class="w-full overflow-x-auto">
         <table class="min-w-full border border-gray-200 shadow-sm bg-white rounded-lg">
             <thead>
@@ -75,15 +78,20 @@
                 <td class="px-3 py-2"><%= customer.getAddress() %></td>
                 <td class="px-3 py-2"><%= customer.getPhonenumber() %></td>
                 <td class="px-3 py-2"><%= customer.getEmail() %></td>
-                <td class="px-3 py-2 text-center">
-                    <form action="DeleteCustomerServlet" method="post" style="display:inline;">
+                <td class="px-3 py-2 text-center space-x-2">
+                    <a href="AddCustomerServlet?action=edit&customerid=<%= customer.getCustomerid() %>"
+                       class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-semibold px-3 py-1 rounded-xl transition text-sm inline-block">
+                        ✏️ Edit
+                    </a>
+                    <form action="AddCustomerServlet?action=delete&origin=admin" method="post" style="display:inline;">
                         <input type="hidden" name="customerid" value="<%= customer.getCustomerid() %>" />
                         <button type="submit"
                                 onclick="return confirm('Are you sure you want to delete this customer?');"
-                                class="bg-red-500 hover:bg-red-700 text-white px-4 py-1 rounded-xl text-sm transition">
+                                class="bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded-xl text-sm transition">
                             🗑️ Delete
                         </button>
                     </form>
+
                 </td>
             </tr>
             <%
