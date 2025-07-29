@@ -62,7 +62,7 @@
                 <td class="px-3 py-2"><%= customer.getPhonenumber() %></td>
                 <td class="px-3 py-2"><%= customer.getEmail() %></td>
                 <td class="px-3 py-2 text-center">
-                    <a href="EditCustomerServlet?customerid=<%= customer.getCustomerid() %>"
+                    <a href="AddCustomerServlet?action=edit&customerid=<%= customer.getCustomerid() %>"
                        class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-semibold px-4 py-1 rounded-xl transition text-sm">
                         ✏️ Edit
                     </a>
@@ -87,7 +87,7 @@
    class="fixed bottom-7 left-7 bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-2xl text-base font-semibold shadow transition">
     ← Back to Dashboard
 </a>
-<a href="staff_add_customer.jsp"
+<a href="AddCustomerServlet?action=add"
    class="fixed bottom-7 right-7 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-2xl text-base font-semibold shadow transition">
     ➕ Add Customer
 </a>
