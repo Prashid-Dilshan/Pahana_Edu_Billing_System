@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <title>Add Staff Member - Pahana Edu Billing System</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet"/>
   <style>
@@ -24,6 +23,7 @@
     <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">Add New Staff Member</h2>
     <span class="text-sm text-gray-400 text-center mb-2">Pahana Edu Billing System</span>
   </div>
+
   <!-- Right: Form -->
   <div class="w-full md:w-3/5 py-10 px-6 md:px-12">
     <div class="md:hidden flex flex-col items-center mb-5">
@@ -47,7 +47,11 @@
     </div>
     <% } %>
 
-    <form action="addStaff" method="post" class="space-y-4">
+    <!-- Form Start -->
+    <form action="StaffServlet" method="post" class="space-y-4">
+      <!-- 👇 Action hidden field for All-in-One Servlet -->
+      <input type="hidden" name="action" value="add" />
+
       <div class="flex md:items-center gap-4">
         <label for="staffid" class="block w-36 shrink-0 font-semibold text-gray-700">Staff ID</label>
         <input type="text" id="staffid" name="staffid" required
@@ -83,6 +87,7 @@
         Add Staff
       </button>
     </form>
+    <!-- Form End -->
   </div>
 </div>
 

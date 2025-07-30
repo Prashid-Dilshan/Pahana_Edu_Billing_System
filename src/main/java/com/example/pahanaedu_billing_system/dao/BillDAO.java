@@ -12,6 +12,7 @@ public class BillDAO {
     private final String jdbcURL = "jdbc:mysql://localhost:3306/pahana_edu";
     private final String jdbcUsername = "root";
     private final String jdbcPassword = "";
+    private final BookDAO bookDAO = new BookDAO();
 
     private Connection getConnection() throws SQLException {
         try {
@@ -68,20 +69,21 @@ public class BillDAO {
         return false;
     }
 
-    // ✅ View all bills with customer info
     public List<Bill> getAllBills() {
         List<Bill> bills = new ArrayList<>();
         String sql = """
-                SELECT b.billid, b.customerid, b.total, b.billdate,
-                       c.name, c.phonenumber
-                FROM bills b
-                JOIN customers c ON b.customerid = c.customerid
-                ORDER BY b.billid DESC
-            """;
+            SELECT b.billid, b.customerid, b.total, b.billdate,
+                   c.name, c.phonenumber
+            FROM bills b
+            JOIN customer c ON b.customerid = c.customerid
+            ORDER BY b.billid DESC
+        """;
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
+
+            System.out.println("Executing getAllBills() query...");
 
             while (rs.next()) {
                 Bill bill = new Bill();
@@ -100,12 +102,18 @@ public class BillDAO {
                 bills.add(bill);
             }
 
+            System.out.println("Bills fetched: " + bills.size());
+
         } catch (SQLException e) {
+            System.out.println("Error fetching bills: " + e.getMessage());
             e.printStackTrace();
         }
 
         return bills;
     }
+
+
+
 
     // ✅ Get specific bill + items by bill ID
     public Bill getBillById(int billId) {
@@ -147,4 +155,41 @@ public class BillDAO {
 
         return bill;
     }
+
+
+
+    public boolean deleteBillById(int billId) {
+        String deleteItemsSql = "DELETE FROM bill_items WHERE billid = ?";
+        String deleteBillSql = "DELETE FROM bills WHERE billid = ?";
+
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement psItems = conn.prepareStatement(deleteItemsSql);
+                 PreparedStatement psBill = conn.prepareStatement(deleteBillSql)) {
+
+                psItems.setInt(1, billId);
+                psItems.executeUpdate();
+
+                psBill.setInt(1, billId);
+                int affectedRows = psBill.executeUpdate();
+
+                conn.commit();
+
+                return affectedRows > 0;
+
+            } catch (SQLException ex) {
+                conn.rollback();
+                ex.printStackTrace();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+
 }
