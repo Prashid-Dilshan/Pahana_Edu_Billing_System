@@ -70,7 +70,8 @@
                         <input type="hidden" name="password" value="<%= s.getPassword() %>" />
                         <input type="submit" value="Edit" class="bg-emerald-500 hover:bg-emerald-600 text-white rounded px-3 py-1 font-semibold text-sm shadow-sm cursor-pointer transition"/>
                     </form>
-                    <a href="Admin_DeleteStaffServlet?staffid=<%= s.getStaffid() %>"
+                    <a href="StaffServlet?action=delete&staffid=<%= s.getStaffid() %>"
+
                        onclick="return confirm('Are you sure you want to delete this staff member?');"
                        class="bg-red-500 hover:bg-red-600 text-white rounded px-3 py-1 font-semibold text-sm shadow-sm ml-1 transition">
                         Delete

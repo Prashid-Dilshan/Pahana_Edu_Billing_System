@@ -8,12 +8,12 @@ import java.util.List;
 
 public class StaffDAO {
     private final String jdbcURL = "jdbc:mysql://localhost:3306/pahana_edu";
-    private final String jdbcUsername = "root"; // ✅ Change if your username is different
-    private final String jdbcPassword = ""; // ✅ Replace with your actual password
+    private final String jdbcUsername = "root";
+    private final String jdbcPassword = "";
 
     private Connection getConnection() throws SQLException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");  // Explicitly load MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             throw new SQLException("MySQL JDBC Driver not found!", e);
         }
@@ -33,12 +33,10 @@ public class StaffDAO {
             int rows = stmt.executeUpdate();
             return (rows > 0) ? "success" : "insert_failed";
         } catch (SQLException e) {
-            // Return error message to the servlet to display properly
             return e.getMessage();
         }
     }
 
-    // ✅ Validate staff login
     public Staff validateStaff(String username, String password) {
         String sql = "SELECT * FROM staff WHERE username=? AND password=?";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -61,7 +59,6 @@ public class StaffDAO {
         return null;
     }
 
-
     public List<Staff> getAllStaff() {
         List<Staff> staffList = new ArrayList<>();
         String sql = "SELECT * FROM staff";
@@ -79,18 +76,14 @@ public class StaffDAO {
                         rs.getString("password")
                 );
                 staffList.add(staff);
-
-                // Debug print
-                System.out.println("✅ Found staff: " + staff.getName());
             }
 
         } catch (SQLException e) {
-            e.printStackTrace(); // check for DB connection issues
+            e.printStackTrace();
         }
 
         return staffList;
     }
-
 
     public void deleteStaffById(String staffid) {
         String sql = "DELETE FROM staff WHERE staffid = ?";
@@ -101,8 +94,6 @@ public class StaffDAO {
             e.printStackTrace();
         }
     }
-
-
 
     public boolean deleteStaff(String staffid) {
         String sql = "DELETE FROM staff WHERE staffid = ?";
@@ -115,10 +106,7 @@ public class StaffDAO {
         }
     }
 
-
-
-
-    public void updateStaff(Staff staff) {
+    public boolean updateStaff(Staff staff) {
         String sql = "UPDATE staff SET name=?, address=?, mobilenumber=?, username=?, password=? WHERE staffid=?";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, staff.getName());
@@ -127,14 +115,10 @@ public class StaffDAO {
             stmt.setString(4, staff.getUsername());
             stmt.setString(5, staff.getPassword());
             stmt.setString(6, staff.getStaffid());
-
-            stmt.executeUpdate();
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
-
-
-
-
 }
