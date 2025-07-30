@@ -48,7 +48,11 @@
         </div>
         <% } %>
 
-        <form action="Admin_EditStaffServlet" method="post" class="space-y-4">
+        <!-- ✅ Updated Form -->
+        <form action="StaffServlet" method="post" class="space-y-4">
+            <!-- Hidden field to indicate "edit" operation -->
+            <input type="hidden" name="action" value="edit" />
+
             <div class="flex md:items-center gap-4">
                 <label class="block w-36 shrink-0 font-semibold text-gray-700">Staff ID</label>
                 <input type="text" name="staffid"
@@ -92,7 +96,9 @@
         </form>
     </div>
 </div>
-<a href="Admin_ViewStaffServlet"
+
+<!-- Back Link -->
+<a href="StaffServlet?action=view"
    class="fixed bottom-7 left-7 bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-2xl text-base font-semibold shadow transition">
     ← Back to Staff List
 </a>

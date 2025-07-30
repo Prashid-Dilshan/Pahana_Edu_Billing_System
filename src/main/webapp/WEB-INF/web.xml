@@ -71,6 +71,15 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>StaffServlet</servlet-name>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.StaffServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StaffServlet</servlet-name>
+        <url-pattern>/StaffServlet</url-pattern>
+    </servlet-mapping>
 
 
 
