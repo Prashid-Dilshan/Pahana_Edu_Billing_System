@@ -125,7 +125,7 @@ public class AddCustomerServlet extends HttpServlet {
 
             if ("admin".equalsIgnoreCase(origin)) {
                 // Redirect to Admin Dashboard or Admin Customers page
-                response.sendRedirect("admin_dashboard.html");
+                response.sendRedirect("admin_customer_manage.jsp");
             } else {
                 // Default redirect to staff view customers page
                 response.sendRedirect("AddCustomerServlet?action=view");
