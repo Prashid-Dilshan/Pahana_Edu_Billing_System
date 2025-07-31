@@ -57,7 +57,7 @@ public class StaffServlet extends HttpServlet {
             if ("success".equals(result)) {
                 request.setAttribute("message", "✅ Staff member added successfully!");
             } else {
-                request.setAttribute("error", "❌ Failed to add staff: " + result);
+                request.setAttribute("error", "❌ Failed to add staff: " );
             }
             request.getRequestDispatcher("add_staff.jsp").forward(request, response);
 
