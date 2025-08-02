@@ -10,9 +10,18 @@
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
         .section-icon { width: 2.5rem; height: 2.5rem; }
+        ::selection { background: #a5b4fc; }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #60a5fa;
+            border-radius: 4px;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 via-blue-100 to-blue-300 min-h-screen flex flex-col items-center justify-center py-12 px-3">
+<body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex flex-col items-center justify-center py-12 px-3">
 
 <div class="w-full max-w-3xl bg-white/90 rounded-3xl shadow-2xl backdrop-blur p-10 border border-blue-100">
     <div class="flex flex-col sm:flex-row items-center gap-5 mb-6">
@@ -112,11 +121,6 @@
         </section>
     </div>
 
-    <div class="mt-10 flex justify-center">
-        <a href="staff_dashboard.html" class="inline-block bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold py-3 px-8 rounded-xl shadow-lg text-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400">
-            &larr; Back to Dashboard
-        </a>
-    </div>
 </div>
 
 </body>

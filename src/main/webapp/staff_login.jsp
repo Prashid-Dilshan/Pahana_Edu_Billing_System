@@ -19,13 +19,10 @@
 <!-- Staff Login Container -->
 <div class="w-full max-w-sm bg-white rounded-3xl shadow-xl px-8 py-10">
   <div class="flex flex-col items-center mb-6">
-    <svg class="w-12 h-12 text-blue-400 mb-3" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-      <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#E3F0FF" />
-      <path d="M17 21a5 5 0 1 1 10 0 5 5 0 0 1-10 0ZM10 39c0-3.5 7.5-6 14-6s14 2.5 14 6v1H10v-1Z" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-
-    <h2 class="text-2xl font-bold text-blue-700 mb-1 text-center">Staff Login</h2>
-    <span class="text-xs text-gray-400 text-center">Pahana Edu Billing System</span>
+    <!-- Bigger and correctly sized logo -->
+    <img src="./assets/logo1.png" alt="Logo" class="w-32 h-32 rounded-md object-contain mb-4" />
+    <h2 class="text-2xl font-bold text-blue-700 mb-1 text-center">Billing System - Staff Login</h2>
+    <span class="text-xs text-gray-400 text-center">User Correct Username And Passowrd</span>
   </div>
 
   <form action="staffLogin" method="post" class="space-y-5">
