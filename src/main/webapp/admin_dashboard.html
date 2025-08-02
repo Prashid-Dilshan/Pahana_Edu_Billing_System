@@ -7,123 +7,162 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
-    ::selection { background: #a5b4fc; }
-    /* Sidebar scrollbars */
-    .sidebar-scroll::-webkit-scrollbar { width: 8px;}
-    .sidebar-scroll::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 50px; }
-    .sidebar-scroll { scrollbar-width: thin; scrollbar-color: #c7d2fe #f1f5fd; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
+    ::selection {
+      background: #a5b4fc;
+    }
     iframe {
       width: 100%;
-      height: calc(100vh - 80px); /* match header */
+      height: calc(100vh - 96px);
       border: none;
-      border-radius: 0 0.75rem 0.75rem 0;
+      border-radius: 1rem;
       background: white;
-      box-shadow: inset 0 0 10px #dbeafe;
+      box-shadow: none;
+      transition: box-shadow 0.3s;
+    }
+    .nav-link {
+      transition: background-color 0.25s, color 0.25s;
+      cursor: pointer;
+    }
+    .nav-link svg {
+      transition: stroke 0.25s;
+    }
+    .nav-link.active {
+      font-weight: 700;
+      background-color: #c7d2fe;
+      color: #3730a3;
+      box-shadow: inset 4px 0 0 0 #4f46e5;
+    }
+    .nav-link.active svg {
+      stroke: #4338ca;
     }
   </style>
 </head>
-<body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen">
+<body class="bg-gradient-to-tr from-blue-200 via-blue-50 to-indigo-50 flex flex-col h-screen">
 
 <!-- Header -->
-<header class="h-20 px-10 flex items-center justify-between bg-white shadow-md border-b border-blue-100 sticky top-0 z-10">
-  <h1 class="text-xl font-semibold text-blue-700 flex items-center gap-2">
-    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M3 4a1 1 0 0 1 1-1h3.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 0 .707.293H20a1 1 0 0 1 1 1v11.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18V5a1 1 0 0 1 1-1Z" />
-    </svg>
-    Pahana Edu Billing System
-  </h1>
-  <a href="login.html" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-bold shadow-md transition focus:ring-2 focus:ring-red-400">
+<header class="h-24 px-8 flex items-center justify-between bg-white/70 backdrop-blur-md border-b border-blue-100 sticky top-0 z-20 rounded-b-3xl">
+  <div class="flex items-center gap-3">
+    <!-- Logo (replace src path if needed) -->
+    <img src="./assets/logo2.png" alt="Logo" class="w-16 h-16 rounded-md object-contain" />
+
+    <h1 class="text-4xl font-extrabold text-blue-700 tracking-tight">Admin Dashboard - Pahana Edu Billing System</h1>
+  </div>
+  <a href="login.html" class="bg-gradient-to-r from-red-500 to-red-500 hover:from-red-600 hover:to-red-600 text-white px-7 py-2 rounded-xl font-bold transition focus:ring-2 focus:ring-pink-300">
     Logout
   </a>
 </header>
 
 <!-- Layout -->
-<div class="flex min-h-[calc(100vh-80px)]">
+<div class="flex flex-1 overflow-hidden">
 
-  <!-- Sidebar (with scroll for long menu) -->
-  <aside class="w-72 bg-white shadow-xl border-r border-blue-100 flex flex-col p-6 space-y-4 sticky top-20 h-[calc(100vh-80px)] sidebar-scroll overflow-y-auto">
-
-    <!-- Sidebar profile/info -->
-    <div class="flex items-center gap-3 mb-8">
-      <img src="https://i.pravatar.cc/40?img=20" alt="Admin" class="rounded-full w-12 h-12 border-2 border-blue-200 shadow"/>
+  <!-- Sidebar -->
+  <aside class="w-80 bg-white/70 backdrop-blur-2xl border-r border-blue-100 flex flex-col p-7 pt-9 space-y-4 h-[calc(100vh-96px)] z-10 rounded-r-3xl">
+    <!-- Profile -->
+    <div class="flex items-center gap-4 mb-10">
+      <img src="https://avatars.githubusercontent.com/u/169634748?s=400&u=61b93027bd4cb677f73ab2d1ae3d0d6ee4c3f6ce&v=4" alt="Admin"
+           class="rounded-full w-14 h-14 border-4 border-blue-200 shadow"/>
       <div>
-        <h2 class="text-blue-700 font-semibold">Welcome, Admin</h2>
-        <p class="text-xs text-blue-400">Dashboard Access</p>
+        <h2 class="text-blue-800 font-bold text-lg leading-4 mb-1">Welcome, Admin</h2>
+        <span class="text-xs text-blue-400">Admin Access</span>
       </div>
     </div>
 
-    <!-- Navigation Links (scrollable if too many) -->
-    <nav class="flex flex-col gap-3 flex-1">
-      <a onclick="loadPage('Admin_home.jsp')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-blue-800 font-semibold bg-blue-100 hover:bg-blue-200 cursor-pointer transition" href="#">
-        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7m-9 2v6m2-6v6m-2 0h2a2 2 0 002-2V7a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"/>
+    <!-- Navigation -->
+    <nav id="sidebarNav" class="flex flex-col gap-3 flex-1 overflow-hidden">
+
+      <a data-page="Admin_home.jsp" onclick="loadPage(this)" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl font-semibold text-indigo-700 hover:bg-indigo-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path d="M3 12L12 4l9 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 10v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Home
       </a>
-      <a onclick="loadPage('add_staff.jsp')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-blue-800 hover:bg-blue-100 cursor-pointer transition" href="#">
-        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="7" r="4"/>
-          <path d="M5.5 21H18.5C18.5 16.5 12 15.5 12 15.5C12 15.5 5.5 16.5 5.5 21Z"/>
+
+      <a data-page="add_staff.jsp" onclick="loadPage(this)" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl font-semibold text-blue-700 hover:bg-blue-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+          <path d="M17 17v-3a4 4 0 0 0-8 0v3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 13h2m-1-1v2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Add Staff
       </a>
-      <a onclick="loadPage('StaffServlet')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-blue-800 hover:bg-blue-100 cursor-pointer transition" href="#">
-        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M2 20c0-4 8-6 10-6s10 2 10 6v2H2v-2Z"/>
+
+      <a data-page="StaffServlet" onclick="loadPage(this)" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl font-semibold text-blue-700 hover:bg-blue-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path d="M17 20h5v-2a4 4 0 0 0-3-3.87M9 20H4v-2A4 4 0 0 1 7 14m13-5a4 4 0 1 0-8 0 4 4 0 0 0 8 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         View Staff
       </a>
-      <a onclick="loadPage('admin_add_book.jsp')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-blue-800 hover:bg-blue-100 cursor-pointer transition" href="#">
-        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <rect width="18" height="13" x="3" y="6" rx="2" />
-          <path d="M16 3v4M8 3v4"/>
+
+      <a data-page="admin_add_book.jsp" onclick="loadPage(this)" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl font-semibold text-blue-700 hover:bg-blue-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-current" viewBox="0 0 24 24" fill="none">
+          <rect x="4" y="5" width="16" height="14" rx="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 9v6m3-3H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Add Book
       </a>
-      <a onclick="loadPage('Admin_ViewBooksServlet')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-blue-800 hover:bg-blue-100 cursor-pointer transition" href="#">
-        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+
+      <a data-page="Admin_ViewBooksServlet" onclick="loadPage(this)" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl font-semibold text-blue-700 hover:bg-blue-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path d="M12 6v2m0 4v6m-6-6h12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="4" y="3" width="16" height="18" rx="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         View Books
       </a>
-      <a onclick="loadPage('AdminManageCustomerServlet')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-blue-800 hover:bg-blue-100 cursor-pointer transition" href="#">
-        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M2 20c0-4 8-6 10-6s10 2 10 6v2H2v-2Z"/>
+
+      <a data-page="AdminManageCustomerServlet" onclick="loadPage(this)" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl font-semibold text-blue-700 hover:bg-blue-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path d="M16 7a4 4 0 10-8 0 4 4 0 008 0zM2 21v-2a4 4 0 014-4h12a4 4 0 014 4v2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Manage Customers
       </a>
-      <a onclick="loadPage('AdminViewBillsServlet')" class="flex items-center gap-3 px-4 py-3 rounded-xl text-blue-800 hover:bg-blue-100 cursor-pointer transition" href="#">
-        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M9 14h6m-6-4h6m-7 8h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-5.586a1 1 0 0 1-.707-.293L9 2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"/>
+
+      <a data-page="AdminViewBillsServlet" onclick="loadPage(this)" class="nav-link flex items-center gap-3 px-5 py-3 rounded-2xl font-semibold text-blue-700 hover:bg-blue-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-current" viewBox="0 0 24 24" fill="none">
+          <path d="M9 14h6m-6-4h6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         View Bills Details
       </a>
-    </nav>
 
-    <!-- Admin info at bottom -->
-    <div class="mt-auto pt-6 border-t border-blue-100 flex flex-col items-center">
-      <img src="https://i.pravatar.cc/72?img=20" alt="Admin" class="rounded-full w-14 h-14 border-4 border-blue-200 shadow mb-2" />
-      <span class="font-semibold text-blue-700">Administrator</span>
-      <span class="text-xs text-blue-400">admin@pahana.edu.lk</span>
-    </div>
+
+
+    </nav>
   </aside>
 
   <!-- Main content -->
-  <main class="flex-1">
+  <main class="flex-1 flex flex-col items-center justify-center bg-transparent p-5 overflow-hidden">
     <iframe id="mainFrame" src="Admin_home.jsp" title="Dashboard Content"></iframe>
   </main>
-
 </div>
 
 <script>
-  function loadPage(page) {
-    document.getElementById("mainFrame").src = page;
+  function loadPage(element) {
+    const page = (typeof element === 'string') ? element : element.getAttribute('data-page');
+    document.getElementById('mainFrame').src = page;
+    updateActiveLink(page);
   }
+  function updateActiveLink(currentPage) {
+    const links = document.querySelectorAll('.nav-link');
+    links.forEach(link => {
+      if (link.getAttribute('data-page') === currentPage) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+  window.addEventListener('load', () => {
+    const iframeSrc = document.getElementById('mainFrame').src.split('/').pop();
+    updateActiveLink(iframeSrc);
+  });
 </script>
-
 </body>
 </html>

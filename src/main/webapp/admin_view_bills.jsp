@@ -9,6 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet"/>
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
+        ::selection { background: #a5b4fc; }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #60a5fa;
+            border-radius: 4px;
+        }
     </style>
     <script>
         function confirmDelete(billId) {
@@ -32,7 +41,23 @@
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen py-10 px-4 flex flex-col items-center">
 
 <div class="w-full max-w-6xl bg-white rounded-3xl shadow-xl px-8 py-10">
+
     <h1 class="text-3xl font-bold text-blue-700 text-center mb-8">All Bills</h1>
+
+    <!-- 🔔 Message Display -->
+    <%
+        String message = (String) session.getAttribute("message");
+        if (message != null) {
+    %>
+    <div class="mb-6 text-center">
+        <div class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-xl shadow text-sm font-semibold">
+            <%= message %>
+        </div>
+    </div>
+    <%
+            session.removeAttribute("message"); // Clear after displaying
+        }
+    %>
 
     <!-- Bills Table -->
     <div class="overflow-x-auto mb-10 border rounded-2xl shadow-lg">
@@ -62,7 +87,7 @@
                 <td class="py-2 px-4 text-center">Rs. <%= String.format("%.2f", billObj.getTotal()) %></td>
                 <td class="py-2 px-4 text-center flex justify-center gap-2">
                     <a href="AdminViewBillDetailsServlet?billId=<%= billObj.getBillId() %>"
-                       class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-3 py-1 rounded transition">
+                       class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded transition">
                         View Details
                     </a>
                     <button onclick="confirmDelete(<%= billObj.getBillId() %>)"
@@ -145,7 +170,6 @@
         }
     %>
 </div>
-
 
 </body>
 </html>

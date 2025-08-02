@@ -2,7 +2,6 @@
 <%@ page import="java.sql.*" %>
 <%
     int customerTotal = 0;
-    int staffTotal = 0;
     int bookTotal = 0;
     int billsTotal = 0;
     int billsToday = 0;
@@ -22,27 +21,22 @@
         if(rs.next()){ customerTotal = rs.getInt(1); }
         rs.close();
 
-        // Staff count
-        rs = stmt.executeQuery("SELECT COUNT(*) FROM staff");
-        if(rs.next()){ staffTotal = rs.getInt(1); }
-        rs.close();
-
         // Book count
         rs = stmt.executeQuery("SELECT COUNT(*) FROM books");
         if(rs.next()){ bookTotal = rs.getInt(1); }
         rs.close();
 
-        // Total bills count
+        // Total Bills count
         rs = stmt.executeQuery("SELECT COUNT(*) FROM bills");
         if(rs.next()){ billsTotal = rs.getInt(1); }
         rs.close();
 
-        // Today's bills count
+        // Today's Bills count
         rs = stmt.executeQuery("SELECT COUNT(*) FROM bills WHERE DATE(billdate) = CURDATE()");
         if(rs.next()){ billsToday = rs.getInt(1); }
         rs.close();
 
-        // Today's bills sum
+        // Today's Bills TOTAL amount
         rs = stmt.executeQuery("SELECT IFNULL(SUM(total),0) FROM bills WHERE DATE(billdate) = CURDATE()");
         if(rs.next()){ billsTodaySum = rs.getDouble(1); }
         rs.close();
@@ -56,7 +50,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Admin Home - Pahana Edu Billing System</title>
+    <title>Staff Home - Pahana Edu Billing System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -69,25 +63,19 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen flex items-center justify-center">
-<div class="w-full max-w-5xl min-h-[80vh] py-10 px-4">
+<div class="w-full max-w-4xl min-h-[80vh] py-10 px-4">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-extrabold text-gray-700 mb-2 tracking-tight">Dashboard Overview</h1>
+        <h1 class="text-3xl font-extrabold text-gray-700 mb-2 tracking-tight">Staff Dashboard</h1>
         <div class="text-sm text-gray-400 font-medium">Pahana Edu Billing System</div>
     </div>
     <!-- Stat cards grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         <!-- Customers -->
         <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col items-center transition hover:shadow-md">
             <span class="material-icons text-gray-300 text-4xl mb-1">people</span>
             <div class="text-3xl font-bold text-gray-700 mb-1"><%= customerTotal %></div>
             <div class="text-sm font-medium text-gray-500 tracking-wide">Customers</div>
-        </div>
-        <!-- Staff -->
-        <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col items-center transition hover:shadow-md">
-            <span class="material-icons text-gray-300 text-4xl mb-1">supervisor_account</span>
-            <div class="text-3xl font-bold text-gray-700 mb-1"><%= staffTotal %></div>
-            <div class="text-sm font-medium text-gray-500 tracking-wide">Staff</div>
         </div>
         <!-- Books -->
         <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col items-center transition hover:shadow-md">
@@ -95,7 +83,7 @@
             <div class="text-3xl font-bold text-gray-700 mb-1"><%= bookTotal %></div>
             <div class="text-sm font-medium text-gray-500 tracking-wide">Books</div>
         </div>
-        <!-- Total Bills -->
+        <!-- All Bills -->
         <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col items-center transition hover:shadow-md">
             <span class="material-icons text-gray-300 text-4xl mb-1">receipt_long</span>
             <div class="text-3xl font-bold text-gray-700 mb-1"><%= billsTotal %></div>
