@@ -17,6 +17,7 @@ public class AddCustomerServlet extends HttpServlet {
 
     private final CustomerDAO customerDAO = new CustomerDAO();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -49,9 +50,10 @@ public class AddCustomerServlet extends HttpServlet {
             // Show add form
             request.getRequestDispatcher("staff_add_customer.jsp").forward(request, response);
         }
-        // If needed, you can handle 'delete' confirmation in GET with &origin etc.
+        // You can extend for 'delete' or other actions if needed in GET
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -78,10 +80,11 @@ public class AddCustomerServlet extends HttpServlet {
             boolean success = customerDAO.addCustomer(customer);
 
             if (success) {
-                request.getSession().setAttribute("msg", "Customer added successfully!");
-                response.sendRedirect("AddCustomerServlet?action=view");
+                request.setAttribute("message", "Customer added successfully!");
+                request.getRequestDispatcher("staff_add_customer.jsp").forward(request, response);
             } else {
-                response.sendRedirect("staff_add_customer.jsp?error=1");
+                request.setAttribute("error", "Failed to add customer. Try again!");
+                request.getRequestDispatcher("staff_add_customer.jsp").forward(request, response);
             }
 
         } else if (action.equals("edit")) {
@@ -102,6 +105,7 @@ public class AddCustomerServlet extends HttpServlet {
             boolean success = customerDAO.updateCustomer(customer);
 
             if (success) {
+                // Redirect to view customers list page with success message in session
                 request.getSession().setAttribute("msg", "Customer updated successfully!");
                 response.sendRedirect("AddCustomerServlet?action=view");
             } else {

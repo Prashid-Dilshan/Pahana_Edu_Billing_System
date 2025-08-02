@@ -12,6 +12,15 @@
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
         ::selection { background: #a5b4fc; }
+        ::selection { background: #a5b4fc; }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #60a5fa;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex flex-col items-center py-10 px-4">
@@ -39,7 +48,7 @@
         <button
                 type="submit"
                 class="px-6 py-2 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-r-lg transition"
-        >🔍 Search</button>
+        > Search</button>
         <%
             if (request.getAttribute("search") != null && !((String)request.getAttribute("search")).isEmpty()) {
         %>
