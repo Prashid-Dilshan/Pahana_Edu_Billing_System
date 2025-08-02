@@ -15,12 +15,10 @@
 <body class="bg-gradient-to-br from-gray-50 via-blue-100 to-blue-400 min-h-screen flex items-center justify-center">
 <div class="w-full max-w-sm bg-white rounded-3xl shadow-xl px-8 py-10">
     <div class="flex flex-col items-center mb-6">
-        <svg class="w-12 h-12 text-blue-600 mb-3" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#E3F0FF"/>
-            <path d="M18 24a6 6 0 1 1 12 0 6 6 0 0 1 -12 0zM10 38c0-4 8-6 14-6s14 2 14 6v2H10v-2z" stroke="#007BFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <h2 class="text-2xl font-bold text-blue-700 mb-1 text-center">Admin Login</h2>
-        <span class="text-xs text-gray-400 text-center">Pahana Edu Billing System</span>
+        <!-- Bigger and correctly sized logo -->
+        <img src="./assets/logo1.png" alt="Logo" class="w-32 h-32 rounded-md object-contain mb-4" />
+        <h2 class="text-2xl font-bold text-blue-700 mb-1 text-center">Billing System - Admin Login</h2>
+        <span class="text-xs text-gray-400 text-center">User Correct Username And Passowrd</span>
     </div>
     <form action="login" method="post" class="space-y-5">
         <div>

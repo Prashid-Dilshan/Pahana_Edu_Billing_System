@@ -23,9 +23,16 @@
             height: 110px;
             object-fit: cover;
             border-radius: 0.375rem; /* rounded-md */
-            /* border removed */
             background: #f2f8fc;
             margin: 0 auto;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #60a5fa;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -33,12 +40,7 @@
 
 <div class="w-full max-w-6xl bg-white rounded-3xl shadow-xl px-8 py-10 flex flex-col items-center">
 
-    <svg class="w-14 h-14 text-blue-400 mb-6" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#E3F0FF" />
-        <path d="M18 24a6 6 0 1 1 12 0 6 6 0 0 1 -12 0zM10 38c0-4 8-6 14-6s14 2 14 6v2H10v-2z" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-
-    <h2 class="text-3xl font-bold text-blue-700 mb-2 text-center">All Books</h2>
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-1 text-center tracking-tight">All Books</h2>
     <span class="text-xs text-gray-400 mb-8 text-center">Admin Dashboard</span>
 
     <!-- Success/Error Messages -->
@@ -56,7 +58,7 @@
     <div class="w-full overflow-x-auto rounded-2xl shadow-lg">
         <table class="min-w-full bg-white rounded-lg">
             <thead>
-            <tr class="bg-blue-100 text-blue-900 select-none">
+            <tr class="bg-blue-100 text-blue-900 select-none border-b border-gray-300">
                 <th class="px-4 py-3 border-b border-blue-200 text-center font-semibold">Book ID</th>
                 <th class="px-4 py-3 border-b border-blue-200 font-semibold">Title</th>
                 <th class="px-4 py-3 border-b border-blue-200 font-semibold">Author(s)</th>
@@ -68,7 +70,7 @@
             </thead>
             <tbody>
             <% for (Book b : bookList) { %>
-            <tr class="even:bg-blue-50 text-gray-900">
+            <tr class="bg-white text-gray-900 border-b border-gray-300">
                 <td class="px-4 py-3 text-center whitespace-nowrap"><%= b.getBookid() %></td>
                 <td class="px-4 py-3 whitespace-normal max-w-xs"><%= b.getTitle() %></td>
                 <td class="px-4 py-3 italic text-gray-600 whitespace-normal max-w-md"><%= b.getAuthor() %></td>
@@ -105,7 +107,6 @@
         ❌ No books found in the database.
     </div>
     <% } %>
-
 
 </div>
 

@@ -11,73 +11,77 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet" />
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
+        ::selection { background: #a5b4fc; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-blue-400 min-h-screen flex flex-col items-center justify-center">
+<body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-6">
 
-<div class="w-full max-w-md bg-white rounded-3xl shadow-xl px-8 py-10 flex flex-col items-center">
-    <svg class="w-14 h-14 text-yellow-400 mb-5" fill="none" viewBox="0 0 48 48">
-        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#FFFBEA" />
-        <path d="M17 21a5 5 0 1 1 10 0 5 5 0 0 1-10 0ZM10 39c0-3.5 7.5-6 14-6s14 2.5 14 6v1H10v-1Z"
-              stroke="#FACC15" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <h2 class="text-2xl font-bold text-yellow-700 mb-2 text-center">Edit Customer</h2>
-    <span class="text-xs text-gray-400 mb-8 text-center">Pahana Edu Billing System</span>
+<div class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl px-8 md:px-12 py-10 flex flex-col items-center">
+
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-1 text-center tracking-tight">Edit Customer</h2>
+    <span class="text-sm text-gray-400 mb-8 text-center">Pahana Edu Billing System</span>
 
     <%-- Error display --%>
     <%
         String errorMsg = (String) request.getAttribute("error");
         if (errorMsg != null) {
     %>
-    <div class="w-full mb-3 bg-red-100 text-red-700 border border-red-400 rounded-lg px-4 py-2 text-center">
+    <div class="w-full mb-6 bg-red-100 text-red-700 border border-red-400 rounded-lg px-5 py-3 text-center shadow-md transition">
         <%= errorMsg %>
     </div>
     <%
         }
         Customer customer = (Customer) request.getAttribute("customer");
-        if (customer == null) { // Fallback (shouldn't happen)
+        if (customer == null) {
     %>
-    <div class="text-red-600 text-center mb-2">No customer data loaded.</div>
+    <div class="text-red-600 text-center mb-4 font-semibold">No customer data loaded.</div>
     <%
         }
     %>
-    <form action="AddCustomerServlet?action=edit" method="post" class="w-full mt-2">
-        <!-- Hidden field for ID -->
+
+    <form action="AddCustomerServlet?action=edit" method="post" class="w-full space-y-6">
         <input type="hidden" name="customerid" value="<%= customer != null ? customer.getCustomerid() : "" %>"/>
-        <div class="mb-4">
-            <label class="block text-gray-700">Name<span class="text-red-500">*</span>:</label>
-            <input type="text" name="name" required
+
+        <!-- Name -->
+        <div class="flex flex-col w-full">
+            <label for="name" class="font-semibold text-gray-700 mb-1">Name<span class="text-red-500">*</span></label>
+            <input type="text" name="name" id="name" required
                    value="<%= customer != null ? customer.getName() : "" %>"
-                   class="w-full px-3 py-2 border-2 border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500"/>
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:outline-none bg-blue-50 transition"/>
         </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Address:</label>
-            <input type="text" name="address"
+
+        <!-- Address -->
+        <div class="flex flex-col w-full">
+            <label for="address" class="font-semibold text-gray-700 mb-1">Address</label>
+            <input type="text" name="address" id="address"
                    value="<%= customer != null ? customer.getAddress() : "" %>"
-                   class="w-full px-3 py-2 border-2 border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500"/>
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:outline-none bg-blue-50 transition"/>
         </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Phone Number:</label>
-            <input type="text" name="phonenumber"
+
+        <!-- Mobile Number -->
+        <div class="flex flex-col w-full">
+            <label for="phonenumber" class="font-semibold text-gray-700 mb-1">Mobile Number</label>
+            <input type="text" name="phonenumber" id="phonenumber"
                    value="<%= customer != null ? customer.getPhonenumber() : "" %>"
-                   class="w-full px-3 py-2 border-2 border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500"/>
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:outline-none bg-blue-50 transition"/>
         </div>
-        <div class="mb-6">
-            <label class="block text-gray-700">Email:</label>
-            <input type="email" name="email"
+
+        <!-- Email -->
+        <div class="flex flex-col w-full">
+            <label for="email" class="font-semibold text-gray-700 mb-1">Email</label>
+            <input type="email" name="email" id="email"
                    value="<%= customer != null ? customer.getEmail() : "" %>"
-                   class="w-full px-3 py-2 border-2 border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500"/>
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:outline-none bg-blue-50 transition"/>
         </div>
+
+        <!-- Submit Button -->
         <button type="submit"
-                class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 py-2 rounded-xl font-semibold text-lg shadow transition">
-            💾 Update Customer
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg shadow transition focus:outline-none focus:ring-2 focus:ring-blue-500 mt-4">
+            Update Customer
         </button>
     </form>
+
 </div>
 
-<a href="AddCustomerServlet?action=view"
-   class="fixed bottom-7 left-7 bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-2xl text-base font-semibold shadow transition">
-    ← Back to Customer List
-</a>
 </body>
 </html>

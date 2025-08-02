@@ -3,93 +3,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Add Staff Member</title>
+  <title>Add Staff Member - Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet"/>
   <style>
     body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
+    ::selection { background: #a5b4fc; }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #60a5fa;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-6">
 
-<div class="w-full max-w-3xl bg-white rounded-3xl shadow-xl flex flex-col md:flex-row overflow-hidden my-12">
-  <!-- Left: Icon Panel -->
-  <div class="hidden md:flex flex-col items-center justify-center bg-gradient-to-b from-blue-100 to-blue-200 rounded-l-3xl py-12 px-10 w-2/5 border-r border-blue-100">
-    <!-- Modern Person Plus icon -->
-    <svg class="w-20 h-20 text-blue-500 mb-7" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 48 48" aria-hidden="true">
-      <circle cx="24" cy="18" r="8" stroke="#3b82f6" fill="#dbeafe"/>
-      <rect x="8" y="32" width="32" height="10" rx="5" fill="#dbeafe" stroke="#60a5fa"/>
-      <path d="M36 14v8M40 18h-8" stroke="#3b82f6" stroke-linecap="round"/>
-    </svg>
-    <div class="mt-3 text-center">
-      <h2 class="text-xl font-bold text-blue-800 mb-1 tracking-tight">Add Staff Member</h2>
-      <div class="text-sm text-blue-500 font-medium opacity-70">Admin Panel</div>
-    </div>
+<div class="w-full max-w-2xl bg-white/90 backdrop-blur-lg rounded-3xl px-8 py-14 flex flex-col gap-3 items-center">
+
+  <!-- Title -->
+  <div class="mb-6 flex flex-col items-center">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-1 text-center tracking-tight">Add Staff Member</h2>
+    <span class="text-xs text-gray-400 mb-2 text-center">Admin Panel</span>
   </div>
 
-  <!-- Right: Form Area -->
-  <div class="w-full md:w-3/5 py-10 px-6 md:px-12 flex flex-col justify-center">
-    <div class="md:hidden flex flex-col items-center mb-6">
-      <svg class="w-14 h-14 text-blue-500 mb-3" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 48 48" aria-hidden="true">
-        <circle cx="24" cy="18" r="8" stroke="#3b82f6" fill="#dbeafe"/>
-        <rect x="8" y="32" width="32" height="10" rx="5" fill="#dbeafe" stroke="#60a5fa"/>
-        <path d="M36 14v8M40 18h-8" stroke="#3b82f6" stroke-linecap="round"/>
-      </svg>
-      <h2 class="text-lg font-bold text-blue-800 mb-1 tracking-tight">Add Staff Member</h2>
-    </div>
+  <!-- Messages -->
+  <% if (request.getAttribute("message") != null) { %>
+  <div class="w-full mb-4 bg-green-100 text-green-800 border border-green-400 rounded-lg px-5 py-3 text-center">
+    <strong><%= request.getAttribute("message") %></strong>
+  </div>
+  <% } else if (request.getAttribute("error") != null) { %>
+  <div class="w-full mb-4 bg-red-100 text-red-700 border border-red-400 rounded-lg px-5 py-3 text-center">
+    <%= request.getAttribute("error") %>
+  </div>
+  <% } %>
 
-    <% if (request.getAttribute("message") != null) { %>
-    <div class="w-full mb-4 bg-green-50 text-green-800 border border-green-400 rounded-lg px-4 py-2 text-center shadow-sm font-medium">
-      <%= request.getAttribute("message") %>
-    </div>
-    <% } %>
-    <% if (request.getAttribute("error") != null) { %>
-    <div class="w-full mb-4 bg-red-50 text-red-700 border border-red-300 rounded-lg px-4 py-2 text-center shadow-sm font-medium">
-      <%= request.getAttribute("error") %>
-    </div>
-    <% } %>
+  <!-- Form -->
+  <form action="StaffServlet" method="post" class="w-full space-y-7">
+    <input type="hidden" name="action" value="add" />
 
-    <form action="StaffServlet" method="post" class="space-y-7 mt-2">
-      <input type="hidden" name="action" value="add" />
-
-      <div class="flex flex-col md:flex-row md:items-center gap-3">
-        <label for="staffid" class="md:w-36 font-medium text-gray-700">Staff ID</label>
-        <input type="text" id="staffid" name="staffid" autocomplete="off" required
-               class="flex-1 px-4 py-2 border border-blue-200 rounded-lg bg-blue-50 placeholder-gray-400 text-base focus:ring-2 focus:ring-blue-400 focus:outline-none transition"/>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
+      <div>
+        <label for="staffid" class="block text-gray-700 mb-1 font-semibold">Staff ID <span class="text-red-500">*</span></label>
+        <input type="text" id="staffid" name="staffid" required
+               class="w-full px-4 py-3 border border-blue-100 rounded-xl bg-blue-50 text-base focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition"/>
       </div>
-      <div class="flex flex-col md:flex-row md:items-center gap-3">
-        <label for="name" class="md:w-36 font-medium text-gray-700">Staff Name</label>
+      <div>
+        <label for="name" class="block text-gray-700 mb-1 font-semibold">Name <span class="text-red-500">*</span></label>
         <input type="text" id="name" name="name" required
-               class="flex-1 px-4 py-2 border border-blue-200 rounded-lg bg-blue-50 placeholder-gray-400 text-base focus:ring-2 focus:ring-blue-400 focus:outline-none transition"/>
+               class="w-full px-4 py-3 border border-blue-100 rounded-xl bg-blue-50 text-base focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition"/>
       </div>
-      <div class="flex flex-col md:flex-row md:items-center gap-3">
-        <label for="address" class="md:w-36 font-medium text-gray-700">Address</label>
-        <input type="text" id="address" name="address" required
-               class="flex-1 px-4 py-2 border border-blue-200 rounded-lg bg-blue-50 placeholder-gray-400 text-base focus:ring-2 focus:ring-blue-400 focus:outline-none transition"/>
+      <div>
+        <label for="address" class="block text-gray-700 mb-1 font-semibold">Address</label>
+        <input type="text" id="address" name="address"
+               class="w-full px-4 py-3 border border-blue-100 rounded-xl bg-blue-50 text-base focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition"/>
       </div>
-      <div class="flex flex-col md:flex-row md:items-center gap-3">
-        <label for="mobilenumber" class="md:w-36 font-medium text-gray-700">Mobile Number</label>
-        <input type="text" id="mobilenumber" name="mobilenumber" required
-               class="flex-1 px-4 py-2 border border-blue-200 rounded-lg bg-blue-50 placeholder-gray-400 text-base focus:ring-2 focus:ring-blue-400 focus:outline-none transition"/>
+      <div>
+        <label for="mobilenumber" class="block text-gray-700 mb-1 font-semibold">Mobile Number</label>
+        <input type="text" id="mobilenumber" name="mobilenumber"
+               class="w-full px-4 py-3 border border-blue-100 rounded-xl bg-blue-50 text-base focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition"/>
       </div>
-      <div class="flex flex-col md:flex-row md:items-center gap-3">
-        <label for="username" class="md:w-36 font-medium text-gray-700">Username</label>
+      <div>
+        <label for="username" class="block text-gray-700 mb-1 font-semibold">Username</label>
         <input type="text" id="username" name="username" required
-               class="flex-1 px-4 py-2 border border-blue-200 rounded-lg bg-blue-50 placeholder-gray-400 text-base focus:ring-2 focus:ring-blue-400 focus:outline-none transition"/>
+               class="w-full px-4 py-3 border border-blue-100 rounded-xl bg-blue-50 text-base focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition"/>
       </div>
-      <div class="flex flex-col md:flex-row md:items-center gap-3">
-        <label for="password" class="md:w-36 font-medium text-gray-700">Password</label>
+      <div>
+        <label for="password" class="block text-gray-700 mb-1 font-semibold">Password</label>
         <input type="password" id="password" name="password" required
-               class="flex-1 px-4 py-2 border border-blue-200 rounded-lg bg-blue-50 placeholder-gray-400 text-base focus:ring-2 focus:ring-blue-400 focus:outline-none transition"/>
+               class="w-full px-4 py-3 border border-blue-100 rounded-xl bg-blue-50 text-base focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition"/>
       </div>
+    </div>
 
-      <button type="submit"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg shadow transition focus:outline-none focus:ring-2 focus:ring-blue-500">
-        Add Staff
-      </button>
-    </form>
-  </div>
+    <button type="submit"
+            class="w-full mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl font-semibold text-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400 tracking-wide">
+      Add Staff
+    </button>
+  </form>
 </div>
 
 </body>
