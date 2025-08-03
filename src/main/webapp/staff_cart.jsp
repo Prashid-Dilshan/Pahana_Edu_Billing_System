@@ -12,7 +12,6 @@
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 font-sans min-h-screen flex flex-col items-center px-4 py-10">
 
 <h2 style="margin-bottom: 24px;" class="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-1 text-center tracking-tight">
-    <span></span>
     <span>Cart Preview</span>
 </h2>
 
@@ -48,7 +47,7 @@
             </td>
             <td class="border border-gray-300 px-4 py-3 text-center">
                 <!-- Auto-update quantity form -->
-                <form action="UpdateCartServlet" method="post" class="inline-block">
+                <form action="StaffCartManageServlet?action=update" method="post" class="inline-block">
                     <input type="hidden" name="bookId" value="<%= item.getBookId() %>" />
                     <input type="number"
                            name="quantity"
@@ -63,12 +62,12 @@
             </td>
             <td class="border border-gray-300 px-4 py-3 text-center space-x-1 whitespace-nowrap">
                 <!-- Remove one quantity -->
-                <a href="RemoveFromCartServlet?bookId=<%= item.getBookId() %>"
+                <a href="StaffCartManageServlet?action=remove&bookId=<%= item.getBookId() %>"
                    class="inline-block bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-md text-sm font-semibold transition"
                    title="Remove one">−</a>
 
                 <!-- Remove all this book -->
-                <a href="RemoveFromCartServlet?bookId=<%= item.getBookId() %>&removeAll=true"
+                <a href="StaffCartManageServlet?action=remove&bookId=<%= item.getBookId() %>&removeAll=true"
                    onclick="return confirm('Remove this book from cart completely?');"
                    class="inline-block bg-red-200 hover:bg-red-300 text-red-800 px-3 py-1 rounded-md text-sm font-semibold transition"
                    title="Remove all">🗑</a>
@@ -112,7 +111,7 @@
 <div class="mt-10 text-center">
     <a href="staff_select_books.jsp"
        class="inline-block text-blue-600 hover:underline font-medium text-lg transition">
-         Back to Book Selection
+        Back to Book Selection
     </a>
 </div>
 
