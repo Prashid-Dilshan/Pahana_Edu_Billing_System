@@ -1,24 +1,13 @@
-package com.example.pahana_edu_billing_system.model;
+package com.example.pahanaedu_billing_system.dto;
 
-public class Staff {
-    private String staffid;
-    private String name;
-    private String address;
-    private String mobilenumber;
-    private String username;
-    private String password;
+public class AdminManageStaffDTO {
+    private String staffid, name, address, mobilenumber, username, password;
 
-    public Staff() {}
-
-    public Staff(String staffid, String name, String address, String mobilenumber, String username, String password) {
-        this.staffid = staffid;
-        this.name = name;
-        this.address = address;
-        this.mobilenumber = mobilenumber;
-        this.username = username;
-        this.password = password;
+    public AdminManageStaffDTO() {}
+    public AdminManageStaffDTO(String staffid, String name, String address, String mobilenumber, String username, String password) {
+        this.staffid = staffid; this.name = name; this.address = address;
+        this.mobilenumber = mobilenumber; this.username = username; this.password = password;
     }
-
     public String getStaffid() { return staffid; }
     public void setStaffid(String staffid) { this.staffid = staffid; }
     public String getName() { return name; }

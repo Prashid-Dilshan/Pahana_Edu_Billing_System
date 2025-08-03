@@ -1,14 +1,11 @@
 package com.example.pahanaedu_billing_system.controller;
 
-import com.example.pahanaedu_billing_system.model.Customer;
-import com.example.pahanaedu_billing_system.dao.CustomerDAO;
+import com.example.pahanaedu_billing_system.dto.AdminManageCustomerDTO;
+import com.example.pahanaedu_billing_system.service.AdminManageCustomerService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,13 +13,11 @@ import java.util.List;
 @WebServlet("/AdminManageCustomerServlet")
 public class AdminManageCustomerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
-    private final CustomerDAO customerDAO = new CustomerDAO();
+    private final AdminManageCustomerService customerService = new AdminManageCustomerService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Get and forward any session messages (like delete success/error)
         HttpSession session = request.getSession(false);
         if (session != null) {
             String msg = (String) session.getAttribute("msg");
@@ -32,24 +27,20 @@ public class AdminManageCustomerServlet extends HttpServlet {
             }
         }
 
-        // Get search term and trim it
         String search = request.getParameter("search");
         if (search != null) {
             search = search.trim();
         }
 
-        List<Customer> customers;
+        List<AdminManageCustomerDTO> customers;
         if (search != null && !search.isEmpty()) {
-            // Search customers by name
-            customers = customerDAO.searchCustomersByName(search);
-            request.setAttribute("search", search); // Keep value in search box
+            customers = customerService.searchCustomersByName(search);
+            request.setAttribute("search", search);
         } else {
-            // Get all customers
-            customers = customerDAO.getAllCustomers();
+            customers = customerService.getAllCustomers();
         }
         request.setAttribute("customers", customers);
 
-        // Forward to JSP to display customer list
         request.getRequestDispatcher("admin_customer_manage.jsp").forward(request, response);
     }
 
@@ -64,7 +55,7 @@ public class AdminManageCustomerServlet extends HttpServlet {
             if (idStr != null && !idStr.isEmpty()) {
                 try {
                     int customerid = Integer.parseInt(idStr);
-                    boolean deleted = customerDAO.deleteCustomer(customerid);
+                    boolean deleted = customerService.deleteCustomer(customerid);
                     if (deleted) {
                         session.setAttribute("msg", "Customer deleted successfully.");
                     } else {
@@ -76,14 +67,12 @@ public class AdminManageCustomerServlet extends HttpServlet {
             } else {
                 session.setAttribute("msg", "Customer ID missing.");
             }
-            // Redirect back to servlet doGet() for fresh list and message display
             response.sendRedirect("AdminManageCustomerServlet?action=view");
             return;
         }
 
-        // Handle other POST actions (add/edit) as needed...
+        // Handle other POST actions...
 
-        // Default fallback, forward to doGet
         doGet(request, response);
     }
 }

@@ -1,14 +1,14 @@
 package com.example.pahanaedu_billing_system.mapper;
 
 import com.example.pahanaedu_billing_system.model.Customer;
-import com.example.pahanaedu_billing_system.dto.CustomerDTO;
+import com.example.pahanaedu_billing_system.dto.AdminManageCustomerDTO;
 
-public class CustomerMapper {
+public class AdminManageCustomerMapper {
 
     // Model → DTO
-    public static CustomerDTO toDTO(Customer customer) {
+    public static AdminManageCustomerDTO toDTO(Customer customer) {
         if (customer == null) return null;
-        CustomerDTO dto = new CustomerDTO();
+        AdminManageCustomerDTO dto = new AdminManageCustomerDTO();
         dto.setCustomerid(customer.getCustomerid());
         dto.setName(customer.getName());
         dto.setAddress(customer.getAddress());
@@ -17,8 +17,8 @@ public class CustomerMapper {
         return dto;
     }
 
-    // DTO → Model/Entity
-    public static Customer toEntity(CustomerDTO dto) {
+    // DTO → Model
+    public static Customer toEntity(AdminManageCustomerDTO dto) {
         if (dto == null) return null;
         Customer customer = new Customer();
         customer.setCustomerid(dto.getCustomerid());
@@ -27,10 +27,5 @@ public class CustomerMapper {
         customer.setPhonenumber(dto.getPhonenumber());
         customer.setEmail(dto.getEmail());
         return customer;
-    }
-
-    // (Optional alias, not needed if you don't use old name)
-    public static Customer toModel(CustomerDTO dto) {
-        return toEntity(dto);
     }
 }

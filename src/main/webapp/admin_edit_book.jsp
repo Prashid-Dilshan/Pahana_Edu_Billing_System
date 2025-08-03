@@ -1,6 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" import="com.example.pahanaedu_billing_system.model.Book" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" import="com.example.pahanaedu_billing_system.dto.BookDTO" %>
 <%
-    Book book = (Book) request.getAttribute("book");
+    BookDTO book = (BookDTO) request.getAttribute("book");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,17 +15,9 @@
         body {
             font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
         }
-        ::selection {
-            background: #a5b4fc;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #60a5fa;
-            border-radius: 4px;
-        }
+        ::selection { background: #a5b4fc; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background-color: #60a5fa; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-6">
