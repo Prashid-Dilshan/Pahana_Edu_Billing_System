@@ -12,6 +12,14 @@
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
         ::selection { background: #a5b4fc; }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #60a5fa;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex flex-col items-center py-10 px-4">
@@ -58,7 +66,7 @@
                 <td class="px-6 py-4 text-center whitespace-nowrap"><%= s.getMobilenumber() %></td>
                 <td class="px-6 py-4 text-center whitespace-nowrap"><%= s.getUsername() %></td>
                 <td class="px-6 py-4 text-center whitespace-nowrap flex items-center justify-center gap-2">
-                    <form action="edit_staff.jsp" method="get" class="inline">
+                    <form action="Admin_edit_staff.jsp" method="get" class="inline">
                         <input type="hidden" name="staffid" value="<%= s.getStaffid() %>" />
                         <input type="hidden" name="name" value="<%= s.getName() %>" />
                         <input type="hidden" name="address" value="<%= s.getAddress() %>" />

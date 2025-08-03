@@ -57,7 +57,7 @@
                 <td class="py-2 px-4 text-center"><%= formattedDate %></td>
                 <td class="py-2 px-4 text-center">Rs. <%= String.format("%.2f", billObj.getTotal()) %></td>
                 <td class="py-2 px-4 text-center flex justify-center gap-2">
-                    <a href="StaffViewBillDetailsServlet?billId=<%= billObj.getBillId() %>"
+                    <a href="StaffBillsManageServlet?billId=<%= billObj.getBillId() %>"
                        class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded transition">
                         View Details
                     </a>

@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class LoginServlet extends HttpServlet {
+public class AdminLoginServlet extends HttpServlet {
     private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_PASSWORD = "12345";
 
