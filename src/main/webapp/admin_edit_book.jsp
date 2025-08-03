@@ -18,13 +18,22 @@
         ::selection {
             background: #a5b4fc;
         }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #60a5fa;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-6">
 
 <div class="bg-white max-w-3xl w-full rounded-3xl shadow-xl p-10 md:p-14">
     <h2 class="text-3xl font-bold text-blue-700 mb-8 text-center">Edit Book</h2>
-    <form action="Admin_EditBookServlet" method="post" enctype="multipart/form-data" class="space-y-8">
+    <!-- Updated form action below -->
+    <form action="AdminBooksManageServlet?action=edit" method="post" enctype="multipart/form-data" class="space-y-8">
 
         <div class="flex flex-col md:flex-row md:items-center gap-4">
             <label for="bookid" class="md:w-40 font-semibold text-gray-700">Book ID:</label>

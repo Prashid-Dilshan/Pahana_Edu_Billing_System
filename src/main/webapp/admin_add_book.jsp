@@ -37,7 +37,8 @@
     </div>
     <% } %>
 
-    <form action="Admin_AddBookServlet" method="post" enctype="multipart/form-data" class="space-y-6">
+    <!-- EDITED: action param added -->
+    <form action="AdminBooksManageServlet?action=add" method="post" enctype="multipart/form-data" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
             <div class="flex flex-col md:flex-row md:items-center gap-3">
                 <label for="bookid" class="md:w-36 font-semibold text-gray-700">Book ID</label>

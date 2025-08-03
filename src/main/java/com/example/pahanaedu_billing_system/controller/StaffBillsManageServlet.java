@@ -11,8 +11,8 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/StaffViewBillDetailsServlet")
-public class StaffViewBillDetailsServlet extends HttpServlet {
+@WebServlet("/StaffBillsManageServlet")
+public class StaffBillsManageServlet extends HttpServlet {
     private final BillDAO billDAO = new BillDAO();
     private final BookDAO bookDAO = new BookDAO();
 
@@ -20,10 +20,11 @@ public class StaffViewBillDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Bill> bills = billDAO.getAllBills();  // For sidebar list
-        request.setAttribute("bills", bills);
-
         String billIdParam = request.getParameter("billId");
+
+        // Always load all bills for sidebar/list
+        List<Bill> bills = billDAO.getAllBills();
+        request.setAttribute("bills", bills);
 
         if (billIdParam != null && !billIdParam.isEmpty()) {
             try {
@@ -31,7 +32,7 @@ public class StaffViewBillDetailsServlet extends HttpServlet {
                 Bill bill = billDAO.getBillById(billId);
 
                 if (bill != null) {
-                    // Set book details in BillItem
+                    // Set Book object inside each BillItem
                     for (BillItem item : bill.getItems()) {
                         item.setBook(bookDAO.getBookById(item.getBookId()));
                     }
@@ -39,12 +40,12 @@ public class StaffViewBillDetailsServlet extends HttpServlet {
                 } else {
                     request.setAttribute("error", "Bill not found.");
                 }
-
             } catch (NumberFormatException e) {
                 request.setAttribute("error", "Invalid Bill ID format.");
             }
         }
 
+        // Forward to the one JSP page for staff bills display
         request.getRequestDispatcher("/staff_display_bills.jsp").forward(request, response);
     }
 }

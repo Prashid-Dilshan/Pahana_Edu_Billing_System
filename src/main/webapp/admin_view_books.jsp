@@ -84,13 +84,17 @@
                     <% } %>
                 </td>
                 <td class="px-4 py-3 text-center whitespace-nowrap flex justify-center gap-2">
-                    <form action="Admin_FetchEditBookServlet" method="get" class="inline">
+                    <!-- Fetch for Edit: -->
+                    <form action="AdminBooksManageServlet" method="get" class="inline">
+                        <input type="hidden" name="action" value="fetchEdit" />
                         <input type="hidden" name="bookid" value="<%= b.getBookid() %>" />
                         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white rounded px-3 py-1 text-sm font-semibold shadow transition">
                             Edit
                         </button>
                     </form>
-                    <form action="Admin_DeleteBookServlet" method="get" class="inline" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                    <!-- Delete: -->
+                    <form action="AdminBooksManageServlet" method="get" class="inline" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                        <input type="hidden" name="action" value="delete" />
                         <input type="hidden" name="bookid" value="<%= b.getBookid() %>" />
                         <button type="submit" class="bg-red-500 hover:bg-red-700 text-white rounded px-3 py-1 text-sm font-semibold shadow transition">
                             Delete

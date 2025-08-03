@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.example.pahanaedu_billing_system.controller.LoginServlet</servlet-class>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.AdminLoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -73,7 +73,7 @@
 
     <servlet>
         <servlet-name>StaffServlet</servlet-name>
-        <servlet-class>com.example.pahanaedu_billing_system.controller.StaffServlet</servlet-class>
+        <servlet-class>com.example.pahanaedu_billing_system.controller.AdminManageStaffServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
