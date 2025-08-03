@@ -8,7 +8,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-public class StaffServlet extends HttpServlet {
+public class AdminManageStaffServlet extends HttpServlet {
     private final StaffDAO staffDAO = new StaffDAO();
 
     @Override
@@ -20,7 +20,7 @@ public class StaffServlet extends HttpServlet {
         if (action == null || action.equals("view")) {
             List<Staff> staffList = staffDAO.getAllStaff();
             request.setAttribute("staffList", staffList);
-            request.getRequestDispatcher("view_staff.jsp").forward(request, response);
+            request.getRequestDispatcher("Admin_view_staff.jsp").forward(request, response);
 
         } else if (action.equals("delete")) {
             String staffid = request.getParameter("staffid");
@@ -33,7 +33,7 @@ public class StaffServlet extends HttpServlet {
 
             List<Staff> staffList = staffDAO.getAllStaff();
             request.setAttribute("staffList", staffList);
-            request.getRequestDispatcher("view_staff.jsp").forward(request, response);
+            request.getRequestDispatcher("Admin_view_staff.jsp").forward(request, response);
         }
     }
 
@@ -59,7 +59,7 @@ public class StaffServlet extends HttpServlet {
             } else {
                 request.setAttribute("error", "❌ Failed to add staff: " );
             }
-            request.getRequestDispatcher("add_staff.jsp").forward(request, response);
+            request.getRequestDispatcher("Admin_add_staff.jsp").forward(request, response);
 
         } else if (action.equals("edit")) {
             boolean updated = staffDAO.updateStaff(staff);
@@ -71,7 +71,7 @@ public class StaffServlet extends HttpServlet {
 
             List<Staff> staffList = staffDAO.getAllStaff();
             request.setAttribute("staffList", staffList);
-            request.getRequestDispatcher("view_staff.jsp").forward(request, response);
+            request.getRequestDispatcher("Admin_view_staff.jsp").forward(request, response);
         }
     }
 }
