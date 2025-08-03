@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.pahanaedu_billing_system.model.Customer" %>
+<%@ page import="com.example.pahanaedu_billing_system.dto.AdminManageCustomerDTO" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,15 +12,8 @@
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
         ::selection { background: #a5b4fc; }
-        ::selection { background: #a5b4fc; }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #60a5fa;
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background-color: #60a5fa; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex flex-col items-center py-10 px-4">
@@ -86,9 +79,9 @@
             </thead>
             <tbody>
             <%
-                List<Customer> customers = (List<Customer>) request.getAttribute("customers");
+                List<AdminManageCustomerDTO> customers = (List<AdminManageCustomerDTO>) request.getAttribute("customers");
                 if (customers != null && !customers.isEmpty()) {
-                    for (Customer c : customers) {
+                    for (AdminManageCustomerDTO c : customers) {
             %>
             <tr class="hover:bg-gray-100 transition">
                 <td class="px-6 py-4 text-center whitespace-nowrap"><%= c.getCustomerid() %></td>

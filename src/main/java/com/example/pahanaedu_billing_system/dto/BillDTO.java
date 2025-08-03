@@ -1,15 +1,15 @@
-package com.example.pahanaedu_billing_system.model;
+package com.example.pahanaedu_billing_system.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Bill {
+public class BillDTO {
     private int billId;
     private int customerId;
     private double total;
     private LocalDateTime dateTime;
-    private List<BillItem> items;
-    private Customer customer;
+    private List<BillItemDTO> items;
+    private CustomerDTO customer;
 
     public int getBillId() { return billId; }
     public void setBillId(int billId) { this.billId = billId; }
@@ -23,9 +23,9 @@ public class Bill {
     public LocalDateTime getDateTime() { return dateTime; }
     public void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime; }
 
-    public List<BillItem> getItems() { return items; }
-    public void setItems(List<BillItem> items) { this.items = items; }
+    public List<BillItemDTO> getItems() { return items; }
+    public void setItems(List<BillItemDTO> items) { this.items = items; }
 
-    public Customer getCustomer() { return customer; }
-    public void setCustomer(Customer customer) { this.customer = customer; }
+    public CustomerDTO getCustomer() { return customer; }
+    public void setCustomer(CustomerDTO customer) { this.customer = customer; }
 }

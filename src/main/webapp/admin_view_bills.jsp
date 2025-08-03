@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*, com.example.pahanaedu_billing_system.model.*" %>
+<%@ page import="java.util.*, com.example.pahanaedu_billing_system.dto.*" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,34 +11,25 @@
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
         ::selection { background: #a5b4fc; }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #60a5fa;
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background-color: #60a5fa; border-radius: 4px; }
     </style>
     <script>
         function confirmDelete(billId) {
             if (confirm("Are you sure you want to delete Bill ID " + billId + "?")) {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = 'AdminBillsManageServlet'; // UPDATED
-
+                form.action = 'AdminBillsManageServlet';
                 let actionInput = document.createElement('input');
                 actionInput.type = 'hidden';
                 actionInput.name = 'action';
                 actionInput.value = 'delete';
                 form.appendChild(actionInput);
-
                 let idInput = document.createElement('input');
                 idInput.type = 'hidden';
                 idInput.name = 'billId';
                 idInput.value = billId;
                 form.appendChild(idInput);
-
                 document.body.appendChild(form);
                 form.submit();
             }
@@ -54,7 +46,6 @@
     <%
         String message = (String) request.getAttribute("message");
         if (message == null) {
-            // For direct redirect after delete, support session-based message, then clear it
             message = (String) session.getAttribute("message");
             if (message != null) session.removeAttribute("message");
         }
@@ -84,10 +75,11 @@
             </thead>
             <tbody>
             <%
-                List<Bill> bills = (List<Bill>) request.getAttribute("bills");
+                // USE DTO TYPES!
+                List<BillDTO> bills = (List<BillDTO>) request.getAttribute("bills");
                 if (bills != null && !bills.isEmpty()) {
-                    for (Bill billObj : bills) {
-                        Customer cust = billObj.getCustomer();
+                    for (BillDTO billObj : bills) {
+                        CustomerDTO cust = billObj.getCustomer();
             %>
             <tr class="hover:bg-gray-100 transition border-t">
                 <td class="py-2 px-4 text-center"><%= billObj.getBillId() %></td>
@@ -96,7 +88,6 @@
                 <td class="py-2 px-4 text-center"><%= billObj.getDateTime() %></td>
                 <td class="py-2 px-4 text-center">Rs. <%= String.format("%.2f", billObj.getTotal()) %></td>
                 <td class="py-2 px-4 text-center flex justify-center gap-2">
-                    <!-- UPDATED: Details view link -->
                     <a href="AdminBillsManageServlet?action=details&billId=<%= billObj.getBillId() %>"
                        class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-3 py-1 rounded transition">
                         View Details
@@ -125,10 +116,10 @@
 
     <!-- Bill Detail Section -->
     <%
-        Bill selectedBill = (Bill) request.getAttribute("bill");
+        BillDTO selectedBill = (BillDTO) request.getAttribute("bill");
         if (selectedBill != null) {
-            Customer sc = selectedBill.getCustomer();
-            List<BillItem> items = selectedBill.getItems();
+            CustomerDTO sc = selectedBill.getCustomer();
+            List<BillItemDTO> items = selectedBill.getItems();
     %>
     <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-xl">
         <h2 class="text-xl font-bold text-blue-700 mb-4">
@@ -154,7 +145,7 @@
             <tbody>
             <%
                 if (items != null && !items.isEmpty()) {
-                    for (BillItem item : items) {
+                    for (BillItemDTO item : items) {
                         String bookTitle = (item.getBook() != null && item.getBook().getTitle() != null)
                                 ? item.getBook().getTitle() : item.getBookId();
             %>
@@ -181,6 +172,5 @@
         }
     %>
 </div>
-
 </body>
 </html>
