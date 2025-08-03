@@ -1,6 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" import="java.util.*,com.example.pahanaedu_billing_system.model.Book" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" import="java.util.*,com.example.pahanaedu_billing_system.dto.BookDTO" %>
 <%
-    List<Book> bookList = (List<Book>) request.getAttribute("bookList");
+    List<BookDTO> bookList = (List<BookDTO>) request.getAttribute("bookList");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +69,7 @@
             </tr>
             </thead>
             <tbody>
-            <% for (Book b : bookList) { %>
+            <% for (BookDTO b : bookList) { %>
             <tr class="bg-white text-gray-900 border-b border-gray-300">
                 <td class="px-4 py-3 text-center whitespace-nowrap"><%= b.getBookid() %></td>
                 <td class="px-4 py-3 whitespace-normal max-w-xs"><%= b.getTitle() %></td>

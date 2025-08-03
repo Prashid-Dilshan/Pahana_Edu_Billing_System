@@ -1,12 +1,13 @@
 package com.example.pahanaedu_billing_system.controller;
 
-import com.example.pahanaedu_billing_system.dao.BookDAO;
-import com.example.pahanaedu_billing_system.model.Book;
+import com.example.pahanaedu_billing_system.dto.BookDTO;
+import com.example.pahanaedu_billing_system.service.BookService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @WebServlet("/AdminBooksManageServlet")
 @MultipartConfig
 public class AdminBooksManageServlet extends HttpServlet {
-    private final BookDAO bookDAO = new BookDAO();
+    private final BookService bookService = new BookService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -26,7 +27,6 @@ public class AdminBooksManageServlet extends HttpServlet {
         } else if ("fetchEdit".equalsIgnoreCase(action)) {
             fetchForEdit(request, response);
         } else {
-            // Default: view all books
             viewBooks(request, response);
         }
     }
@@ -41,34 +41,19 @@ public class AdminBooksManageServlet extends HttpServlet {
         } else if ("edit".equalsIgnoreCase(action)) {
             editBook(request, response);
         } else {
-            // Optionally handle invalid actions
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
         }
     }
 
-    // --- ACTION METHODS ---
     private void addBook(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String bookid = request.getParameter("bookid");
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int stockbookcount = Integer.parseInt(request.getParameter("stockbookcount"));
-        Part filePart = request.getPart("bookphoto");
-        byte[] bookphotoBytes = null;
+        BookDTO bookDTO = getBookDTOFromRequest(request);
+        boolean success = bookService.addBook(bookDTO);
 
-        if (filePart != null && filePart.getSize() > 0) {
-            try (InputStream inputStream = filePart.getInputStream()) {
-                bookphotoBytes = inputStream.readAllBytes();
-            }
-        }
-        Book book = new Book(bookid, title, author, price, stockbookcount, bookphotoBytes);
-        String result = bookDAO.addBook(book);
-
-        if ("success".equals(result)) {
+        if (success) {
             request.setAttribute("message", "✅ Book added successfully!");
         } else {
-            request.setAttribute("error", "❌ Failed to add book: " + result);
+            request.setAttribute("error", "❌ Failed to add book. Duplicate ID or DB Error.");
         }
         request.getRequestDispatcher("admin_add_book.jsp").forward(request, response);
     }
@@ -76,50 +61,37 @@ public class AdminBooksManageServlet extends HttpServlet {
     private void deleteBook(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String bookid = request.getParameter("bookid");
-        boolean deleted = false;
-        if (bookid != null && !bookid.isEmpty()) {
-            deleted = bookDAO.deleteBook(bookid);
-        }
+        boolean deleted = (bookid != null && !bookid.isEmpty()) && bookService.deleteBook(bookid);
+
         if (deleted) {
             request.setAttribute("message", "✅ Book deleted successfully!");
         } else {
             request.setAttribute("error", "❌ Failed to delete book. Invalid Book ID or DB error.");
         }
-        List<Book> updatedBookList = bookDAO.getAllBooks();
+        List<BookDTO> updatedBookList = bookService.getAllBooks();
         request.setAttribute("bookList", updatedBookList);
         request.getRequestDispatcher("admin_view_books.jsp").forward(request, response);
     }
 
     private void editBook(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String bookid = request.getParameter("bookid");
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int stockbookcount = Integer.parseInt(request.getParameter("stockbookcount"));
+        BookDTO bookDTO = getBookDTOFromRequest(request);
 
-        Part filePart = request.getPart("bookphoto");
-        byte[] bookphotoBytes = null;
-
-        if (filePart != null && filePart.getSize() > 0) {
-            try (InputStream inputStream = filePart.getInputStream()) {
-                bookphotoBytes = inputStream.readAllBytes();
-            }
-        } else {
-            Book oldBook = bookDAO.getBookById(bookid);
+        // Handle photo update
+        if (bookDTO.getBookphoto() == null || bookDTO.getBookphoto().length == 0) {
+            BookDTO oldBook = bookService.getBookById(bookDTO.getBookid());
             if (oldBook != null) {
-                bookphotoBytes = oldBook.getBookphoto();
+                bookDTO.setBookphoto(oldBook.getBookphoto());
             }
         }
 
-        Book book = new Book(bookid, title, author, price, stockbookcount, bookphotoBytes);
-        boolean result = bookDAO.updateBook(book);
+        boolean result = bookService.updateBook(bookDTO);
 
         if (result) {
             response.sendRedirect("AdminBooksManageServlet?action=view&msg=updated");
         } else {
             request.setAttribute("error", "❌ Failed to update book. Please check your input.");
-            request.setAttribute("book", book);
+            request.setAttribute("book", bookDTO);
             request.getRequestDispatcher("admin_edit_book.jsp").forward(request, response);
         }
     }
@@ -127,9 +99,9 @@ public class AdminBooksManageServlet extends HttpServlet {
     private void fetchForEdit(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String bookid = request.getParameter("bookid");
-        Book book = bookDAO.getBookById(bookid);
-        if (book != null) {
-            request.setAttribute("book", book);
+        BookDTO bookDTO = bookService.getBookById(bookid);
+        if (bookDTO != null) {
+            request.setAttribute("book", bookDTO);
             request.getRequestDispatcher("admin_edit_book.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "❌ Book not found for editing.");
@@ -139,8 +111,35 @@ public class AdminBooksManageServlet extends HttpServlet {
 
     private void viewBooks(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Book> books = bookDAO.getAllBooks();
+        List<BookDTO> books = bookService.getAllBooks();
         request.setAttribute("bookList", books);
         request.getRequestDispatcher("admin_view_books.jsp").forward(request, response);
+    }
+
+    /** Helper: extract BookDTO from request */
+    private BookDTO getBookDTOFromRequest(HttpServletRequest request) throws IOException, ServletException {
+        String bookid = request.getParameter("bookid");
+        String title = request.getParameter("title");
+        String author = request.getParameter("author");
+        double price = Double.parseDouble(request.getParameter("price"));
+        int stockbookcount = Integer.parseInt(request.getParameter("stockbookcount"));
+
+        Part filePart = request.getPart("bookphoto");
+        byte[] bookphotoBytes = null;
+        if (filePart != null && filePart.getSize() > 0) {
+            try (InputStream inputStream = filePart.getInputStream()) {
+                bookphotoBytes = inputStream.readAllBytes();
+            }
+        }
+
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setBookid(bookid);
+        bookDTO.setTitle(title);
+        bookDTO.setAuthor(author);
+        bookDTO.setPrice(price);
+        bookDTO.setStockbookcount(stockbookcount);
+        bookDTO.setBookphoto(bookphotoBytes);
+
+        return bookDTO;
     }
 }

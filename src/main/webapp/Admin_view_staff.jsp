@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.*, com.example.pahana_edu_billing_system.model.Staff" %>
+<%@ page import="java.util.*, com.example.pahanaedu_billing_system.dto.AdminManageStaffDTO" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,20 +12,13 @@
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
         ::selection { background: #a5b4fc; }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #60a5fa;
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background-color: #60a5fa; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex flex-col items-center py-10 px-4">
 
 <div class="w-full max-w-6xl bg-white rounded-3xl shadow-xl px-8 py-10 flex flex-col items-center">
-
 
     <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-1 text-center tracking-tight">Staff Members List</h2>
     <span class="text-xs text-gray-400 mb-10 text-center">Admin Dashboard</span>
@@ -55,9 +48,9 @@
             </thead>
             <tbody>
             <%
-                List<Staff> staffList = (List<Staff>) request.getAttribute("staffList");
+                List<AdminManageStaffDTO> staffList = (List<AdminManageStaffDTO>) request.getAttribute("staffList");
                 if (staffList != null && !staffList.isEmpty()) {
-                    for (Staff s : staffList) {
+                    for (AdminManageStaffDTO s : staffList) {
             %>
             <tr class="hover:bg-gray-100 transition">
                 <td class="px-6 py-4 text-center whitespace-nowrap"><%= s.getStaffid() %></td>
@@ -66,21 +59,19 @@
                 <td class="px-6 py-4 text-center whitespace-nowrap"><%= s.getMobilenumber() %></td>
                 <td class="px-6 py-4 text-center whitespace-nowrap"><%= s.getUsername() %></td>
                 <td class="px-6 py-4 text-center whitespace-nowrap flex items-center justify-center gap-2">
-                    <form action="Admin_edit_staff.jsp" method="get" class="inline">
+                    <form action="AdminManageStaffServlet" method="get" class="inline">
+                        <input type="hidden" name="action" value="fetchEdit" />
                         <input type="hidden" name="staffid" value="<%= s.getStaffid() %>" />
-                        <input type="hidden" name="name" value="<%= s.getName() %>" />
-                        <input type="hidden" name="address" value="<%= s.getAddress() %>" />
-                        <input type="hidden" name="mobilenumber" value="<%= s.getMobilenumber() %>" />
-                        <input type="hidden" name="username" value="<%= s.getUsername() %>" />
-                        <input type="hidden" name="password" value="<%= s.getPassword() %>" />
                         <input type="submit" value="Edit"
                                class="bg-emerald-500 hover:bg-emerald-600 text-white rounded px-3 py-1 text-sm font-semibold shadow-sm cursor-pointer transition" />
                     </form>
-                    <a href="StaffServlet?action=delete&staffid=<%= s.getStaffid() %>"
-                       onclick="return confirm('Are you sure you want to delete this staff member?');"
-                       class="bg-red-500 hover:bg-red-600 text-white rounded px-3 py-1 text-sm font-semibold shadow-sm transition cursor-pointer">
-                        Delete
-                    </a>
+                    <form action="AdminManageStaffServlet" method="get" class="inline"
+                          onsubmit="return confirm('Are you sure you want to delete this staff member?');">
+                        <input type="hidden" name="action" value="delete" />
+                        <input type="hidden" name="staffid" value="<%= s.getStaffid() %>" />
+                        <input type="submit" value="Delete"
+                               class="bg-red-500 hover:bg-red-600 text-white rounded px-3 py-1 text-sm font-semibold shadow-sm cursor-pointer transition" />
+                    </form>
                 </td>
             </tr>
             <%
