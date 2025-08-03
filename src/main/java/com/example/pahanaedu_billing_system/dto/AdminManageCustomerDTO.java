@@ -1,17 +1,15 @@
 package com.example.pahanaedu_billing_system.dto;
 
-public class CustomerDTO {
+public class AdminManageCustomerDTO {
     private int customerid;
     private String name;
     private String address;
     private String phonenumber;
     private String email;
 
-    // No-argument constructor
-    public CustomerDTO() {}
+    public AdminManageCustomerDTO() {}
 
-    // Optionally, constructor with all fields
-    public CustomerDTO(int customerid, String name, String address, String phonenumber, String email) {
+    public AdminManageCustomerDTO(int customerid, String name, String address, String phonenumber, String email) {
         this.customerid = customerid;
         this.name = name;
         this.address = address;
@@ -19,7 +17,7 @@ public class CustomerDTO {
         this.email = email;
     }
 
-    // Getters and setters
+    // Getters & Setters
     public int getCustomerid() { return customerid; }
     public void setCustomerid(int customerid) { this.customerid = customerid; }
     public String getName() { return name; }

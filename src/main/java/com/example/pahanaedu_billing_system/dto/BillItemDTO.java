@@ -1,12 +1,13 @@
-package com.example.pahanaedu_billing_system.model;
+package com.example.pahanaedu_billing_system.dto;
 
-public class BillItem {
+public class BillItemDTO {
     private int billId;
     private String bookId;
     private double price;
     private int quantity;
-    private Book book; // optional
+    private BookDTO book; // For display (optional)
 
+    // Getters and Setters
     public int getBillId() { return billId; }
     public void setBillId(int billId) { this.billId = billId; }
 
@@ -19,6 +20,6 @@ public class BillItem {
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public Book getBook() { return book; }
-    public void setBook(Book book) { this.book = book; }
+    public BookDTO getBook() { return book; }
+    public void setBook(BookDTO book) { this.book = book; }
 }

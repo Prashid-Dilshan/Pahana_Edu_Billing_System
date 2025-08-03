@@ -10,14 +10,8 @@
   <style>
     body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
     ::selection { background: #a5b4fc; }
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background-color: #60a5fa;
-      border-radius: 4px;
-    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background-color: #60a5fa; border-radius: 4px; }
   </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-6">
@@ -42,7 +36,7 @@
   <% } %>
 
   <!-- Form -->
-  <form action="StaffServlet" method="post" class="w-full space-y-7">
+  <form action="AdminManageStaffServlet" method="post" class="w-full space-y-7">
     <input type="hidden" name="action" value="add" />
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">

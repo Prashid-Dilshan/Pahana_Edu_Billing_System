@@ -1,6 +1,6 @@
-package com.example.pahanaedu_billing_system.model;
+package com.example.pahanaedu_billing_system.dto;
 
-public class Book {
+public class BookDTO {
     private String bookid;
     private String title;
     private String author;
@@ -8,18 +8,8 @@ public class Book {
     private int stockbookcount;
     private byte[] bookphoto;
 
-    public Book() {}
+    public BookDTO() {}
 
-    public Book(String bookid, String title, String author, double price, int stockbookcount, byte[] bookphoto) {
-        this.bookid = bookid;
-        this.title = title;
-        this.author = author;
-        this.price = price;
-        this.stockbookcount = stockbookcount;
-        this.bookphoto = bookphoto;
-    }
-
-    // Getters and Setters
     public String getBookid() { return bookid; }
     public void setBookid(String bookid) { this.bookid = bookid; }
     public String getTitle() { return title; }

@@ -1,4 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.pahanaedu_billing_system.dto.AdminManageStaffDTO" %>
+<%
+    // Staff was set by servlet: request.setAttribute("staff", staffDTO);
+    AdminManageStaffDTO staff = (AdminManageStaffDTO) request.getAttribute("staff");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,17 +12,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap"/>
     <style>
         body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #60a5fa;
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background-color: #60a5fa; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-6">
@@ -45,7 +44,6 @@
             <h2 class="text-xl font-bold text-blue-700 mb-1 text-center">Edit Staff Member</h2>
             <span class="text-xs text-gray-400 text-center mb-4">Admin Dashboard</span>
         </div>
-
         <% if (request.getAttribute("message") != null) { %>
         <div class="w-full mb-4 bg-green-100 text-green-800 border border-green-400 rounded-lg px-4 py-2 text-center transition shadow-sm">
             <strong><%= request.getAttribute("message") %></strong>
@@ -56,44 +54,42 @@
             <%= request.getAttribute("error") %>
         </div>
         <% } %>
-
-        <form action="StaffServlet" method="post" class="space-y-6">
+        <form action="AdminManageStaffServlet" method="post" class="space-y-6">
             <input type="hidden" name="action" value="edit" />
-
             <div class="flex flex-col md:flex-row md:items-center gap-4">
                 <label class="md:w-36 font-semibold text-gray-700">Staff ID</label>
-                <input type="text" name="staffid"
-                       value="<%= request.getParameter("staffid") %>" readonly
+                <input type="text" name="staffid" readonly
+                       value="<%= staff != null ? staff.getStaffid() : "" %>"
                        class="bg-gray-100 text-gray-500 px-4 py-2 rounded-lg border border-gray-300 w-full md:flex-1 focus:outline-none cursor-not-allowed" />
             </div>
             <div class="flex flex-col md:flex-row md:items-center gap-4">
                 <label class="md:w-36 font-semibold text-gray-700">Staff Name</label>
                 <input type="text" name="name"
-                       value="<%= request.getParameter("name") %>"
+                       value="<%= staff != null ? staff.getName() : "" %>"
                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-300 focus:outline-none bg-blue-50 transition"/>
             </div>
             <div class="flex flex-col md:flex-row md:items-center gap-4">
                 <label class="md:w-36 font-semibold text-gray-700">Address</label>
                 <input type="text" name="address"
-                       value="<%= request.getParameter("address") %>"
+                       value="<%= staff != null ? staff.getAddress() : "" %>"
                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-300 focus:outline-none bg-blue-50 transition"/>
             </div>
             <div class="flex flex-col md:flex-row md:items-center gap-4">
                 <label class="md:w-36 font-semibold text-gray-700">Mobile Number</label>
                 <input type="text" name="mobilenumber"
-                       value="<%= request.getParameter("mobilenumber") %>"
+                       value="<%= staff != null ? staff.getMobilenumber() : "" %>"
                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-300 focus:outline-none bg-blue-50 transition"/>
             </div>
             <div class="flex flex-col md:flex-row md:items-center gap-4">
                 <label class="md:w-36 font-semibold text-gray-700">Username</label>
                 <input type="text" name="username"
-                       value="<%= request.getParameter("username") %>"
+                       value="<%= staff != null ? staff.getUsername() : "" %>"
                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-300 focus:outline-none bg-blue-50 transition"/>
             </div>
             <div class="flex flex-col md:flex-row md:items-center gap-4">
                 <label class="md:w-36 font-semibold text-gray-700">Password</label>
                 <input type="text" name="password"
-                       value="<%= request.getParameter("password") %>"
+                       value="<%= staff != null ? staff.getPassword() : "" %>"
                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-300 focus:outline-none bg-blue-50 transition"/>
             </div>
             <button type="submit"
@@ -103,6 +99,5 @@
         </form>
     </div>
 </div>
-
 </body>
 </html>
