@@ -13,6 +13,10 @@ public class CartItem {
         this.quantity = quantity;
     }
 
+    public CartItem() {
+
+    }
+
     public String getBookId() {
         return bookId;
     }
