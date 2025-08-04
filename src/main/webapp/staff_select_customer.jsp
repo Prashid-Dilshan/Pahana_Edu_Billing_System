@@ -1,4 +1,4 @@
-<%@ page import="java.util.*, com.example.pahanaedu_billing_system.model.Customer" %>
+<%@ page import="java.util.*, com.example.pahanaedu_billing_system.dto.StaffSelectCustomerDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page session="true" %>
 <!DOCTYPE html>
@@ -9,17 +9,8 @@
     <title>Select Customer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Optional scrollbar styling */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-thumb { background-color: #60a5fa; border-radius: 4px; }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #60a5fa;
-            border-radius: 4px;
-        }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 font-sans min-h-screen flex flex-col items-center px-4 py-10">
@@ -37,6 +28,7 @@
             placeholder="Search by customer name"
             class="flex-grow px-4 py-3 rounded-l-lg border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             autocomplete="off"
+            value="<%= request.getParameter("searchName") != null ? request.getParameter("searchName") : "" %>"
     />
     <button
             type="submit"
@@ -46,7 +38,7 @@
 </form>
 
 <%
-    List<Customer> customers = (List<Customer>) request.getAttribute("customers");
+    List<StaffSelectCustomerDTO> customers = (List<StaffSelectCustomerDTO>) request.getAttribute("customers");
     if (customers != null && !customers.isEmpty()) {
 %>
 <form action="GenerateBillServlet" method="post" class="w-full max-w-6xl mx-auto overflow-x-auto rounded-lg shadow-lg bg-white">
@@ -62,7 +54,7 @@
         </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-        <% for (Customer c : customers) { %>
+        <% for (StaffSelectCustomerDTO c : customers) { %>
         <tr class="hover:bg-blue-50 cursor-pointer">
             <td class="border border-gray-300 px-5 py-3 text-center">
                 <input type="radio" name="customerId" value="<%= c.getCustomerid() %>" required class="cursor-pointer"/>
@@ -82,7 +74,6 @@
                class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold shadow-md cursor-pointer transition" />
     </div>
 </form>
-
 <% } else { %>
 <p class="text-center text-red-600 text-lg font-semibold mt-20 max-w-lg">
     No customers found.
