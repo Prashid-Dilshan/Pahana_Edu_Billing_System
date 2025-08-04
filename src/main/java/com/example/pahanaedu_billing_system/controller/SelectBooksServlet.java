@@ -1,8 +1,8 @@
 package com.example.pahanaedu_billing_system.controller;
 
-import com.example.pahanaedu_billing_system.dao.BookDAO;
-import com.example.pahanaedu_billing_system.model.Book;
+import com.example.pahanaedu_billing_system.dto.StaffSelectBooksDTO;
 
+import com.example.pahanaedu_billing_system.service.StaffSelectBooksService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,18 +16,19 @@ import java.util.List;
 public class SelectBooksServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    private final StaffSelectBooksService staffSelectBooksService = new StaffSelectBooksService();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String searchQuery = request.getParameter("searchQuery");
-        BookDAO bookDAO = new BookDAO();
-        List<Book> bookList;
+        List<StaffSelectBooksDTO> bookList;
 
         if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            bookList = bookDAO.searchBooksByTitleOrAuthor(searchQuery);
+            bookList = staffSelectBooksService.searchBooks(searchQuery.trim());
         } else {
-            bookList = bookDAO.getAllBooks();
+            bookList = staffSelectBooksService.getAllBooks();
         }
 
         request.setAttribute("bookList", bookList);
