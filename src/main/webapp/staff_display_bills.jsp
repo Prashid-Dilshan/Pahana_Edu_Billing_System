@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*, com.example.pahanaedu_billing_system.model.*" %>
+<%@ page import="java.util.*, com.example.pahanaedu_billing_system.dto.StaffBillsManageDTO, com.example.pahanaedu_billing_system.dto.StaffBillsManageCustomerDTO, com.example.pahanaedu_billing_system.dto.StaffBillsManageItemDTO" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,18 +8,11 @@
     <title>Staff View Bills | Pahana Edu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;400&display=swap" rel="stylesheet"/>
     <style>
         body { font-family: 'Inter','Segoe UI',Arial,sans-serif; }
         ::selection { background: #a5b4fc; }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #60a5fa;
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background-color: #60a5fa; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen py-10 px-4 flex flex-col items-center">
@@ -42,11 +35,11 @@
             </thead>
             <tbody>
             <%
-                List<Bill> bills = (List<Bill>) request.getAttribute("bills");
+                List<StaffBillsManageDTO> bills = (List<StaffBillsManageDTO>) request.getAttribute("bills");
                 if (bills != null && !bills.isEmpty()) {
                     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                    for (Bill billObj : bills) {
-                        Customer cust = billObj.getCustomer();
+                    for (StaffBillsManageDTO billObj : bills) {
+                        StaffBillsManageCustomerDTO cust = billObj.getCustomer();
                         String formattedDate = billObj.getDateTime() != null
                                 ? billObj.getDateTime().format(dateFormatter) : "N/A";
             %>
@@ -81,10 +74,10 @@
 
     <!-- Bill Detail Section -->
     <%
-        Bill selectedBill = (Bill) request.getAttribute("bill");
+        StaffBillsManageDTO selectedBill = (StaffBillsManageDTO) request.getAttribute("bill");
         if (selectedBill != null) {
-            Customer sc = selectedBill.getCustomer();
-            List<BillItem> items = selectedBill.getItems();
+            StaffBillsManageCustomerDTO sc = selectedBill.getCustomer();
+            List<StaffBillsManageItemDTO> items = selectedBill.getItems();
             String detailDate = selectedBill.getDateTime() != null ?
                     selectedBill.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "N/A";
     %>
@@ -112,9 +105,10 @@
             <tbody>
             <%
                 if (items != null && !items.isEmpty()) {
-                    for (BillItem item : items) {
-                        String bookTitle = (item.getBook() != null && item.getBook().getTitle() != null)
-                                ? item.getBook().getTitle() : item.getBookId();
+                    for (StaffBillsManageItemDTO item : items) {
+                        String bookTitle = item.getTitle() != null && !item.getTitle().isEmpty()
+                                ? item.getTitle()
+                                : item.getBookId();
             %>
             <tr class="border-t hover:bg-gray-50">
                 <td class="py-2 px-4"><%= bookTitle %></td>

@@ -52,7 +52,15 @@ public class StaffCartManageServlet extends HttpServlet {
 
         if (bookIdParam != null) {
             String qtyParam = request.getParameter("quantity_" + bookIdParam);
-            int quantity = qtyParam != null ? Integer.parseInt(qtyParam) : 1;
+            int quantity = 1;
+            try {
+                if (qtyParam != null) {
+                    quantity = Integer.parseInt(qtyParam);
+                    if (quantity < 1) quantity = 1;
+                }
+            } catch (NumberFormatException ex) {
+                // Default to 1
+            }
 
             Book book = bookDAO.getBookById(bookIdParam);
             if (book != null) {
@@ -76,7 +84,11 @@ public class StaffCartManageServlet extends HttpServlet {
                 session.setAttribute("cart", cart);
             }
         }
-        response.sendRedirect("staff_select_books.jsp");
+
+        // FIX: Go back to book selection page, not cart page!
+        response.sendRedirect("selectBooks"); // Servlet path (not JSP file)
+        // If your book selection page is staff_select_books.jsp direct, use:
+        // response.sendRedirect("staff_select_books.jsp");
     }
 
     private void updateCart(HttpServletRequest request, HttpServletResponse response)
@@ -89,6 +101,7 @@ public class StaffCartManageServlet extends HttpServlet {
         if (cart != null && bookId != null && qtyStr != null) {
             try {
                 int newQty = Integer.parseInt(qtyStr);
+                if (newQty < 1) newQty = 1; // Optional: don't allow below 1
                 for (CartItem item : cart) {
                     if (item.getBookId().equals(bookId)) {
                         item.setQuantity(newQty);
@@ -114,17 +127,18 @@ public class StaffCartManageServlet extends HttpServlet {
                 CartItem item = iterator.next();
                 if (item.getBookId().equals(bookIdParam)) {
                     if ("true".equalsIgnoreCase(removeAllParam)) {
-                        iterator.remove(); // Remove whole item
+                        iterator.remove(); // Remove entire line
                     } else {
                         if (item.getQuantity() > 1) {
-                            item.setQuantity(item.getQuantity() - 1); // Just -1
+                            item.setQuantity(item.getQuantity() - 1);
                         } else {
-                            iterator.remove(); // Remove if only one left
+                            iterator.remove();
                         }
                     }
                     break;
                 }
             }
+            session.setAttribute("cart", cart);
         }
         response.sendRedirect("staff_cart.jsp");
     }
