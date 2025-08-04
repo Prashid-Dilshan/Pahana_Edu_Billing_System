@@ -22,7 +22,7 @@ class BillServiceTest {
     @Test
     void testGetBillById() {
         BillService service = new BillService();
-        int billId = 100; // Use a valid, existing billId from your DB
+        int billId = 120; // Use a valid, existing billId from your DB
         BillDTO bill = service.getBillById(billId);
         assertNotNull(bill, "BillDTO should not be null when billId exists");
     }

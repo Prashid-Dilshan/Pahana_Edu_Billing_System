@@ -18,7 +18,7 @@ class StaffBillsManageServiceTest {
     @Test
     void testGetBillById() {
         StaffBillsManageService service = new StaffBillsManageService();
-        int billId = 100; // Use a valid, existing billId in your DB
+        int billId = 120; // Use a valid, existing billId in your DB
         StaffBillsManageDTO dto = service.getBillById(billId);
         assertNotNull(dto, "StaffBillsManageDTO should not be null if billId exists");
     }

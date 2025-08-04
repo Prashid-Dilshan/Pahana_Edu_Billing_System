@@ -32,7 +32,7 @@ class CustomerServiceTest {
     @Test
     void testGetCustomerById() {
         CustomerService service = new CustomerService();
-        int custId = 96; // Please use an ID that you know exists
+        int custId = 99; // Please use an ID that you know exists
         Customer customer = service.getCustomerById(custId);
         assertNotNull(customer, "Customer should not be null if ID exists");
     }
