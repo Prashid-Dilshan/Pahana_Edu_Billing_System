@@ -36,7 +36,7 @@ class AdminManageCustomerServiceTest {
 
     @Test
     void testDeleteCustomer() {
-        int customerId = 105;  // Ensure this customer exists in the test DB before running
+        int customerId = 109;  // Ensure this customer exists in the test DB before running
         boolean deleted = service.deleteCustomer(customerId);
         assertTrue(deleted, "Customer should be deleted successfully");
     }
