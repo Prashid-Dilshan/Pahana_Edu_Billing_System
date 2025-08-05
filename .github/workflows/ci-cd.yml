@@ -40,11 +40,14 @@ jobs:
       - name: Build with Maven (skip tests)
         run: mvn -B clean package -DskipTests --file pom.xml  # Added -DskipTests to avoid running tests here
 
+      - name: Debug - List files in target folder
+        run: ls -lh target/ || echo "Target folder is empty!"
+
       - name: Upload JAR Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-jar
-          path: target/*.jar
+          name: billing-app-jar  # Changed to unique name to avoid mismatches
+          path: target/  # Upload full target folder to ensure all files are included
 
   test:
     name: Run Tests
@@ -72,7 +75,7 @@ jobs:
       - name: Download JAR Artifact
         uses: actions/download-artifact@v4  # Added to download build artifact
         with:
-          name: app-jar
+          name: billing-app-jar  # Match the new unique name
           path: target/
 
       - name: Run tests with Maven
@@ -95,4 +98,3 @@ jobs:
           echo "🎉 Deployment started..."
           echo "Deploying to production environment (Tomcat, FTP, server, etc.)"
           echo "✅ Deployment successful!"
-  
