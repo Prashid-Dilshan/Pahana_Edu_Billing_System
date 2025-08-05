@@ -1,0 +1,60 @@
+name: Frontend CI for JSP, HTML, and Tailwind
+
+on:
+  push:
+    branches:
+      - main
+      - Development
+    paths:
+      - '**/*.jsp'  # JSP files in any folder
+      - '**/*.html' # HTML files
+      - '**/*.css'  # CSS/Tailwind files
+  pull_request:
+    branches:
+      - main
+      - Development
+    paths:
+      - '**/*.jsp'
+      - '**/*.html'
+      - '**/*.css'
+
+jobs:
+  ci-build:
+    name: CI Build and Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js for Tailwind
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # ඔයාගේ Node version එකට change කරගන්න
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install  # Tailwind සහ අනිත් tools install කරන්න
+
+      - name: Build Tailwind CSS
+        run: npx tailwindcss -i ./src/input.css -o ./public/output.css --minify  # ඔයාගේ input/output paths එකට match කරගන්න
+
+      - name: Basic HTML/JSP Validation (Optional)
+        run: |
+          echo "Running basic checks on HTML/JSP files..."
+          # Simple check - ඔයාට tools add කරගන්නකෝ (e.g., tidy for HTML)
+          sudo apt-get install -y tidy
+          tidy -e **/*.html **/*.jsp || echo "Warnings found - check logs"
+
+      - name: Upload CI Artifacts (Optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-ci-assets
+          path: public/  # Built files folder එක
