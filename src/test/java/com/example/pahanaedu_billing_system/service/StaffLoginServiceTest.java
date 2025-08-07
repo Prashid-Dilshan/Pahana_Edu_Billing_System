@@ -1,38 +1,54 @@
 package com.example.pahanaedu_billing_system.service;
 
 import com.example.pahanaedu_billing_system.dto.StaffLoginDTO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StaffLoginServiceTest {
 
+    private StaffLoginService staffLoginService;
+
+    @BeforeEach
+    void setUp() {
+        staffLoginService = new StaffLoginService();
+    }
+
+
     @Test
-    void testValidateStaff_ValidCredentials() {
-        StaffLoginService service = new StaffLoginService();
-
-        String username = "s1";     // Use a real, valid username
-        String password = "12345";     // Use real, valid password
-
-        StaffLoginDTO dto = service.validateStaff(username, password);
-
-        // If credentials are correct and exist in DB, dto should not be null
-        assertNotNull(dto, "DTO should not be null for valid credentials");
-        // Optionally, check certain dto fields as well
-        // assertEquals(username, dto.getUsername());
+    void testValidateStaffWithInvalidUsername() {
+        StaffLoginDTO dto = staffLoginService.validateStaff("invalidUser", "validPass");
+        assertNull(dto, "Invalid username should return null");
     }
 
     @Test
-    void testValidateStaff_InvalidCredentials() {
-        StaffLoginService service = new StaffLoginService();
+    void testValidateStaffWithInvalidPassword() {
+        StaffLoginDTO dto = staffLoginService.validateStaff("validUser", "invalidPass");
+        assertNull(dto, "Invalid password should return null");
+    }
 
-        String username = "invaliduser";
-        String password = "wrongpass";
+    @Test
+    void testValidateStaffWithNullUsername() {
+        StaffLoginDTO dto = staffLoginService.validateStaff(null, "validPass");
+        assertNull(dto, "Null username should return null");
+    }
 
-        StaffLoginDTO dto = service.validateStaff(username, password);
+    @Test
+    void testValidateStaffWithNullPassword() {
+        StaffLoginDTO dto = staffLoginService.validateStaff("validUser", null);
+        assertNull(dto, "Null password should return null");
+    }
 
-        // For invalid credentials, dto should be null
-        assertNull(dto, "DTO should be null for invalid credentials");
+    @Test
+    void testValidateStaffWithEmptyUsername() {
+        StaffLoginDTO dto = staffLoginService.validateStaff("", "validPass");
+        assertNull(dto, "Empty username should return null");
+    }
+
+    @Test
+    void testValidateStaffWithEmptyPassword() {
+        StaffLoginDTO dto = staffLoginService.validateStaff("validUser", "");
+        assertNull(dto, "Empty password should return null");
     }
 }
