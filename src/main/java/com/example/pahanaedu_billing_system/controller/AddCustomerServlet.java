@@ -15,7 +15,7 @@ import java.util.List;
 public class AddCustomerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private final CustomerDAO customerDAO = new CustomerDAO();
+    CustomerDAO customerDAO = new CustomerDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
