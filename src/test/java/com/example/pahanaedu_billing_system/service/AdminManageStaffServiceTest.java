@@ -1,59 +1,66 @@
 package com.example.pahanaedu_billing_system.service;
 
 import com.example.pahanaedu_billing_system.dto.AdminManageStaffDTO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AdminManageStaffServiceTest {
 
+    private AdminManageStaffService service;
+
+    @BeforeEach
+    void setUp() {
+        service = new AdminManageStaffService();
+    }
+
     @Test
     void testGetAllStaff() {
-        AdminManageStaffService service = new AdminManageStaffService();
         List<AdminManageStaffDTO> staffList = service.getAllStaff();
         assertNotNull(staffList, "Staff list should not be null");
-        // Optionally: assertTrue(staffList.size() > 0, "Should have staff records");
+        assertFalse(staffList.isEmpty(), "Staff list should not be empty");
     }
 
     @Test
     void testGetStaffById() {
-        AdminManageStaffService service = new AdminManageStaffService();
-        String staffId = "s1"; // Use a valid staffId according to your DB/data
-        AdminManageStaffDTO dto = service.getStaffById(staffId);
-        // dto can be null if staffId doesn't exist; just check for no exception/null
-        assertNotNull(dto, "Staff DTO should not be null when staffId exists");
-        // Optionally: assertEquals(staffId, dto.getId());
+        AdminManageStaffDTO staff = service.getStaffById("1");  // Replace "1" with valid ID
+        assertNotNull(staff, "Staff should not be null for valid ID");
     }
 
     @Test
     void testAddStaff() {
-        AdminManageStaffService service = new AdminManageStaffService();
-        AdminManageStaffDTO newStaff = new AdminManageStaffDTO();
-        // Set fields as necessary for your constructor or setters
-        // e.g., newStaff.setName("Jane Doe");
-        boolean added = service.addStaff(newStaff);
-        // Typically true if insert works, false otherwise
-        assertTrue(added || !added, "Should return true or false"); // Relaxed assertion
+        AdminManageStaffDTO staffDTO = new AdminManageStaffDTO();
+        // Set DTO fields here or use a constructor
+        boolean result = service.addStaff(staffDTO);
+        assertTrue(result, "Add staff should return true on success");
     }
 
     @Test
     void testUpdateStaff() {
-        AdminManageStaffService service = new AdminManageStaffService();
-        AdminManageStaffDTO updateDTO = new AdminManageStaffDTO();
-        // Set ID and fields as necessary
-        // e.g., updateDTO.setId("1");
-        boolean updated = service.updateStaff(updateDTO);
-        assertTrue(updated || !updated, "Should return true or false");
+        AdminManageStaffDTO staffDTO = new AdminManageStaffDTO();
+        // Set DTO fields here or use a constructor
+        boolean result = service.updateStaff(staffDTO);
+        assertTrue(result, "Update staff should return true on success");
     }
 
     @Test
     void testDeleteStaff() {
-        AdminManageStaffService service = new AdminManageStaffService();
-        String staffId = "1"; // Use an existing staffId if possible
-        boolean deleted = service.deleteStaff(staffId);
-        assertTrue(deleted || !deleted, "Should return true or false");
+        boolean result = service.deleteStaff("1");  // Replace with valid ID
+        assertTrue(result, "Delete staff should return true on success");
+    }
+
+    @Test
+    void testAddStaffWithNullDTO() {
+        AdminManageStaffDTO nullDTO = null;
+        assertThrows(NullPointerException.class, () -> service.addStaff(nullDTO), "Adding null DTO should throw NullPointerException");
+    }
+
+    @Test
+    void testUpdateStaffWithNullDTO() {
+        AdminManageStaffDTO nullDTO = null;
+        assertThrows(NullPointerException.class, () -> service.updateStaff(nullDTO), "Updating null DTO should throw NullPointerException");
     }
 }
