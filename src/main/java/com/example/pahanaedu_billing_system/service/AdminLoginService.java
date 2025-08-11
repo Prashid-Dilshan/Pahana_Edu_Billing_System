@@ -15,4 +15,13 @@ public class AdminLoginService {
         }
         return true;
     }
+
+    public boolean isUsernameValid(String username) {
+        return ADMIN_USERNAME.equals(username);
+    }
+
+    public boolean isPasswordValid(String username, String password) {
+        // Assume username is already valid, check password
+        return ADMIN_PASSWORD.equals(password);
+    }
 }
