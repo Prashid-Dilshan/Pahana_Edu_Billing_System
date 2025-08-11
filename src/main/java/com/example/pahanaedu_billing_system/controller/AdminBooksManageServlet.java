@@ -48,6 +48,15 @@ public class AdminBooksManageServlet extends HttpServlet {
     private void addBook(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BookDTO bookDTO = getBookDTOFromRequest(request);
+
+        // Check if book ID already exists
+        BookDTO existingBook = bookService.getBookById(bookDTO.getBookid());
+        if (existingBook != null) {
+            request.setAttribute("error", "❌ Cannot add book: Book ID already exists.");
+            request.getRequestDispatcher("admin_add_book.jsp").forward(request, response);
+            return;
+        }
+
         boolean success = bookService.addBook(bookDTO);
 
         if (success) {
@@ -113,6 +122,13 @@ public class AdminBooksManageServlet extends HttpServlet {
             throws ServletException, IOException {
         List<BookDTO> books = bookService.getAllBooks();
         request.setAttribute("bookList", books);
+
+        // New: Check for msg parameter from update redirect and set success message
+        String msg = request.getParameter("msg");
+        if ("updated".equalsIgnoreCase(msg)) {
+            request.setAttribute("message", "✅ Book updated successfully!");
+        }
+
         request.getRequestDispatcher("admin_view_books.jsp").forward(request, response);
     }
 

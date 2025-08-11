@@ -13,4 +13,16 @@ public class StaffLoginService {
         Staff staff = staffDAO.validateStaff(username, password);
         return StaffLoginMapper.toDTO(staff);
     }
+
+    public boolean isUsernameValid(String username) {
+        // Check if username exists using DAO
+        Staff staff = staffDAO.findStaffByUsername(username); // Assumes you added this method to DAO
+        return staff != null;
+    }
+
+    public boolean isPasswordValid(String username, String password) {
+        // Assume username is valid, check full validation (which includes password)
+        Staff staff = staffDAO.validateStaff(username, password);
+        return staff != null;
+    }
 }

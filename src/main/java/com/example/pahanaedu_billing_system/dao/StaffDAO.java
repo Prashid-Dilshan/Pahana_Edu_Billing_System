@@ -121,4 +121,26 @@ public class StaffDAO {
             return false;
         }
     }
+
+    public Staff findStaffByUsername(String username) {
+        Staff staff = null;
+        String sql = "SELECT * FROM staff WHERE username = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                staff = new Staff(
+                        rs.getString("staffid"),
+                        rs.getString("name"),
+                        rs.getString("address"),
+                        rs.getString("mobilenumber"),
+                        rs.getString("username"),
+                        rs.getString("password")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return staff;
+    }
 }

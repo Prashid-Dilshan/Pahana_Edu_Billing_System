@@ -35,8 +35,11 @@
   </div>
   <% } %>
 
+  <!-- Client-side Error Message Container -->
+  <div id="client-error" class="w-full mb-4 bg-red-100 text-red-700 border border-red-400 rounded-lg px-5 py-3 text-center hidden"></div>
+
   <!-- Form -->
-  <form action="AdminManageStaffServlet" method="post" class="w-full space-y-7">
+  <form action="AdminManageStaffServlet" method="post" class="w-full space-y-7" onsubmit="return validateForm()">
     <input type="hidden" name="action" value="add" />
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
@@ -78,6 +81,38 @@
     </button>
   </form>
 </div>
+
+<script>
+  function validateForm() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    var mobileNumber = document.getElementById("mobilenumber").value;
+    var errorDiv = document.getElementById("client-error");
+    var errorMessage = "";
+
+    // Clear previous errors
+    errorDiv.classList.add("hidden");
+    errorDiv.innerHTML = "";
+
+    // Check if username and password are the same
+    if (username === password && username !== "") {
+      errorMessage += "Username and password cannot be the same.<br>";
+    }
+
+    // Check if mobile number contains only numbers (allow empty)
+    if (mobileNumber !== "" && !/^\d+$/.test(mobileNumber)) {
+      errorMessage += "Mobile number can only contain numbers.<br>";
+    }
+
+    if (errorMessage !== "") {
+      errorDiv.innerHTML = errorMessage;
+      errorDiv.classList.remove("hidden");
+      return false;
+    }
+
+    return true;
+  }
+</script>
 
 </body>
 </html>
