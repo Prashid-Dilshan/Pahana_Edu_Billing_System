@@ -60,6 +60,14 @@ public class AdminManageStaffServlet extends HttpServlet {
         AdminManageStaffDTO staffDTO = new AdminManageStaffDTO(staffid, name, address, mobilenumber, username, password);
 
         if (action == null || action.equalsIgnoreCase("add")) {
+            // Check if staff ID already exists
+            AdminManageStaffDTO existingStaff = staffService.getStaffById(staffid);
+            if (existingStaff != null) {
+                request.setAttribute("error", "❌ Cannot add staff: Staff ID already exists.");
+                request.getRequestDispatcher("Admin_add_staff.jsp").forward(request, response);
+                return;
+            }
+
             boolean success = staffService.addStaff(staffDTO);
             if (success) {
                 request.setAttribute("message", "✅ Staff member added successfully!");

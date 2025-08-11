@@ -19,14 +19,35 @@ public class AdminLoginServlet extends HttpServlet {
                 request.getParameter("password")
         );
 
-        AdminLoginService authService = new AdminLoginService();
-        boolean isAuthenticated = authService.loginCheck(credentials);
+        String username = credentials.getUsername();
+        String password = credentials.getPassword();
 
-        if (!isAuthenticated) {
-            request.setAttribute("error", "Invalid username or password. Please try again.");
+        AdminLoginService authService = new AdminLoginService();
+
+        // First, check if username and password are the same
+        if (username.equals(password)) {
+            request.setAttribute("error", "Username and password cannot be the same. Please try again.");
             request.getRequestDispatcher("admin_login.jsp").forward(request, response);
-        } else {
+            return;
+        }
+
+        // Check if username is valid
+        boolean usernameValid = authService.isUsernameValid(username);
+
+        // If username is valid, check password
+        boolean passwordValid = usernameValid && authService.isPasswordValid(username, password);
+
+        if (usernameValid && passwordValid) {
             response.sendRedirect("admin_dashboard.html");
+        } else {
+            String errorMsg;
+            if (!usernameValid) {
+                errorMsg = "Invalid username. Please try again.";
+            } else {
+                errorMsg = "Invalid password. Please try again.";
+            }
+            request.setAttribute("error", errorMsg);
+            request.getRequestDispatcher("admin_login.jsp").forward(request, response);
         }
     }
 }

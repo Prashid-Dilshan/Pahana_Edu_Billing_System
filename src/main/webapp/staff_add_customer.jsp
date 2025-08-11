@@ -42,8 +42,11 @@
     </div>
     <% } %>
 
+    <!-- Client-side Error Message Container -->
+    <div id="client-error" class="w-full mb-4 bg-red-100 text-red-700 border border-red-400 rounded-lg px-5 py-3 text-center hidden"></div>
+
     <!-- Main Form -->
-    <form action="AddCustomerServlet?action=add" method="post" class="w-full space-y-7">
+    <form action="AddCustomerServlet?action=add" method="post" class="w-full space-y-7" onsubmit="return validateForm()">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
             <div>
                 <label for="name" class="block text-gray-700 mb-1 font-semibold">Name <span class="text-red-500">*</span></label>
@@ -56,7 +59,7 @@
                        class="w-full px-4 py-3 border border-blue-100 rounded-xl bg-blue-50 text-base focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition"/>
             </div>
             <div>
-                <label for="115" class="block text-gray-700 mb-1 font-semibold">Phone Number</label>
+                <label for="phonenumber" class="block text-gray-700 mb-1 font-semibold">Phone Number</label>
                 <input type="text" name="phonenumber" id="phonenumber"
                        class="w-full px-4 py-3 border border-blue-100 rounded-xl bg-blue-50 text-base focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition"/>
             </div>
@@ -72,6 +75,37 @@
         </button>
     </form>
 </div>
+
+<script>
+    function validateForm() {
+        var mobileNumber = document.getElementById("phonenumber").value;
+        var email = document.getElementById("email").value;
+        var errorDiv = document.getElementById("client-error");
+        var errorMessage = "";
+
+        // Clear previous errors
+        errorDiv.classList.add("hidden");
+        errorDiv.innerHTML = "";
+
+        // Check if mobile number contains only numbers (allow empty)
+        if (mobileNumber !== "" && !/^\d+$/.test(mobileNumber)) {
+            errorMessage += "Mobile number can only contain numbers.<br>";
+        }
+
+        // Check if email is a valid Gmail address (allow empty)
+        if (email !== "" && !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
+            errorMessage += "Please enter a valid Gmail address.<br>";
+        }
+
+        if (errorMessage !== "") {
+            errorDiv.innerHTML = errorMessage;
+            errorDiv.classList.remove("hidden");
+            return false;
+        }
+
+        return true;
+    }
+</script>
 
 </body>
 </html>
