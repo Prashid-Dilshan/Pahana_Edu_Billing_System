@@ -18,13 +18,37 @@ public class StaffLoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        StaffLoginDTO staffDTO = loginService.validateStaff(username, password);
-        if (staffDTO != null) {
-            // You can store staffDTO in session for later use (optional)
-            request.getSession().setAttribute("staff", staffDTO);
-            response.sendRedirect("staff_dashboard.html");
+        // First, check if username and password are the same
+        if (username.equals(password)) {
+            request.setAttribute("error", "Username and password cannot be the same. Please try again.");
+            request.getRequestDispatcher("staff_login.jsp").forward(request, response);
+            return;
+        }
+
+        // Check if username is valid
+        boolean usernameValid = loginService.isUsernameValid(username);
+
+        // If username is valid, check password
+        boolean passwordValid = usernameValid && loginService.isPasswordValid(username, password);
+
+        if (usernameValid && passwordValid) {
+            StaffLoginDTO staffDTO = loginService.validateStaff(username, password); // Still use this to get DTO
+            if (staffDTO != null) {
+                request.getSession().setAttribute("staff", staffDTO);
+                response.sendRedirect("staff_dashboard.html");
+            } else {
+                // Fallback error (should not happen if checks are consistent)
+                request.setAttribute("error", "Invalid staff username or password!");
+                request.getRequestDispatcher("staff_login.jsp").forward(request, response);
+            }
         } else {
-            request.setAttribute("error", "Invalid staff username or password!");
+            String errorMsg;
+            if (!usernameValid) {
+                errorMsg = "Invalid username. Please try again.";
+            } else {
+                errorMsg = "Invalid password. Please try again.";
+            }
+            request.setAttribute("error", errorMsg);
             request.getRequestDispatcher("staff_login.jsp").forward(request, response);
         }
     }

@@ -23,7 +23,8 @@
 <body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-300 min-h-screen flex items-center justify-center p-6">
 
 <div class="bg-white max-w-3xl w-full rounded-3xl shadow-xl p-10 md:p-14">
-    <h2 class="text-3xl font-bold text-blue-700 mb-8 text-center">Edit Book</h2>
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-1 text-center tracking-tight">Edit Book</h2>
+
     <!-- Updated form action below -->
     <form action="AdminBooksManageServlet?action=edit" method="post" enctype="multipart/form-data" class="space-y-8">
 

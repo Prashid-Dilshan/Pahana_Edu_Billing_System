@@ -24,12 +24,7 @@
 <div class="w-full max-w-3xl bg-white rounded-3xl shadow-xl md:flex my-12 overflow-hidden">
     <!-- Left: Logo & Title -->
     <div class="hidden md:flex flex-col items-center justify-center bg-blue-50 rounded-l-3xl py-14 px-10 w-2/5">
-        <svg class="w-16 h-16 text-blue-500 mb-6" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#E3F0FF"/>
-            <path d="M17 21a5 5 0 1 1 10 0 5 5 0 0 1-10 0ZM10 39c0-3.5 7.5-6 14-6s14 2.5 14 6v1H10v-1Z"
-                  stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <h2 class="text-2xl font-bold text-blue-700 mb-2 text-center">Edit Staff Member</h2>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-1 text-center tracking-tight">Edit Staff Member</h2>
         <span class="text-sm text-gray-400 text-center">Admin Dashboard</span>
     </div>
 
