@@ -101,25 +101,51 @@ public class CustomerDAO {
         return false;
     }
 
-
-
-
+    // 5. Delete customer with auto-reset if table becomes empty
     public boolean deleteCustomer(int customerid) {
-        String sql = "DELETE FROM customer WHERE customerid = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, customerid);
-            return stmt.executeUpdate() > 0;
+        String deleteSql = "DELETE FROM customer WHERE customerid = ?";
+        String countSql = "SELECT COUNT(*) FROM customer";
+        String resetSql = "ALTER TABLE customer AUTO_INCREMENT = 1";
+
+        try (Connection conn = getConnection()) {
+            // Start transaction for safety
+            conn.setAutoCommit(false);
+
+            // Delete the customer
+            try (PreparedStatement pstmtDelete = conn.prepareStatement(deleteSql)) {
+                pstmtDelete.setInt(1, customerid);
+                int rowsAffected = pstmtDelete.executeUpdate();
+                if (rowsAffected == 0) {
+                    conn.rollback();
+                    return false;  // No customer found to delete
+                }
+            }
+
+            // Check if table is now empty
+            try (PreparedStatement pstmtCount = conn.prepareStatement(countSql);
+                 ResultSet rs = pstmtCount.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    // Table is empty – reset auto-increment to 1
+                    try (PreparedStatement pstmtReset = conn.prepareStatement(resetSql)) {
+                        pstmtReset.executeUpdate();
+                    }
+                }
+            }
+
+            conn.commit();
+            return true;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+            try (Connection conn = getConnection()) {
+                conn.rollback();
+            } catch (SQLException | ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+            return false;
         }
-        return false;
     }
 
-
-
-
-
+    // 6. Search customers by name
     public List<Customer> searchCustomersByName(String name) {
         List<Customer> customers = new ArrayList<>();
         String sql = "SELECT * FROM customer WHERE name LIKE ?";
@@ -141,8 +167,4 @@ public class CustomerDAO {
         }
         return customers;
     }
-
-
-
-
 }
