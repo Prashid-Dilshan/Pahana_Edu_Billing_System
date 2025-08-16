@@ -4,8 +4,6 @@ import com.example.pahanaedu_billing_system.model.*;
 import com.example.pahanaedu_billing_system.dao.BillDAO;
 import com.example.pahanaedu_billing_system.dao.BookDAO;
 import com.example.pahanaedu_billing_system.dao.CustomerDAO;
-import com.example.pahanaedu_billing_system.util.EmailUtil;
-import com.example.pahanaedu_billing_system.util.PDFGeneratorUtil;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
@@ -73,30 +71,10 @@ public class ConfirmGenerateBillServlet extends HttpServlet {
                 // ✅ Store bill in session
                 session.setAttribute("generatedBill", bill);
 
-                // ✅ Step 1: Generate PDF
-                String pdfPath = getServletContext().getRealPath("/") + "Bill_" + bill.getBillId() + ".pdf";
-                File pdfFile = new File(pdfPath);
-                try (OutputStream out = new FileOutputStream(pdfFile)) {
-                    PDFGeneratorUtil.generatePDF(bill, out);
-                }
 
-                // ✅ Step 2: Email PDF to customer
-                String toEmail = customer.getEmail();
-                String message = "Dear " + customer.getName() + ",\n\nThank you for your purchase at Pahana Edu Bookshop. Please find your bill attached.\n\nBest regards,\nPahana Edu Book Shop";
 
-                boolean emailSent = EmailUtil.sendEmailWithAttachment(
-                        toEmail,
-                        "Your Bill - Pahana Edu Bookshop",
-                        message,
-                        pdfFile
-                );
-
-                // ✅ Final response
-                if (emailSent) {
-                    response.sendRedirect("bill_success.jsp");
-                } else {
-                    response.getWriter().println("⚠️ Bill saved, but email sending failed.");
-                }
+                // ✅ No email sending anymore – directly redirect to success
+                response.sendRedirect("bill_success.jsp");
             } else {
                 response.getWriter().println("❌ Bill generation failed.");
             }
