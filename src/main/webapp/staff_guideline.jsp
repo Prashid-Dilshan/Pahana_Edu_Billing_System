@@ -26,9 +26,7 @@
 <div class="w-full max-w-3xl bg-white/90 rounded-3xl shadow-2xl backdrop-blur p-10 border border-blue-100">
     <div class="flex flex-col sm:flex-row items-center gap-5 mb-6">
         <div class="flex-shrink-0">
-        <span class="inline-flex items-center justify-center rounded-full shadow-lg bg-gradient-to-tr from-sky-400 to-indigo-300 p-3">
-          <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#0891b2"/><path d="M17 21a5 5 0 1 1 10 0 5 5 0 0 1-10 0ZM10 39c0-3.5 7.5-6 14-6s14 2.5 14 6v1H10v-1Z" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
+
         </div>
         <div>
             <h1 class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600 mb-2">Staff Guidelines</h1>
