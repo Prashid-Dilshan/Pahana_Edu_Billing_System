@@ -10,6 +10,41 @@ This project is a **web-based billing  system** designed to replace the existing
 <img width="1907" height="913" alt="image" src="https://github.com/user-attachments/assets/3e03ec12-baa2-4966-ba80-30a89133506f" />
 
 
+##  Features
+
+###  Authentication
+- Secure login for **Admin** and **Staff** users.
+- Role-based dashboard views.
+
+### Admin Dashboard
+- Add new staff members.
+- View and manage existing staff.
+- Add and manage books.
+- Manage customer records.
+- View all generated bills and bill details.
+- Dashboard overview with:
+  - Total Customers
+  - Total Staff
+  - Total Books
+  - Total Bills
+  - Today’s Bills
+  - Today’s Bill Total
+
+### Staff Dashboard
+- Register new customers.
+- View and manage customer details.
+- Generate bills for customers.
+- View previously generated bills.
+- Staff guidelines section.
+- Dashboard overview with:
+  - Total Customers
+  - Total Books
+  - Total Bills
+  - Today’s Bills
+  - Today’s Bill Total
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Frontend:** JSP / HTML5, CSS , Tailwind , JavaScript  
@@ -22,6 +57,28 @@ This project is a **web-based billing  system** designed to replace the existing
 
 ---
 
+
+## 🚀 Prerequisites
+
+Make sure you have the following installed:
+
+- [Java JDK 17+](https://adoptium.net/)  
+- [Apache Maven 3.8+](https://maven.apache.org/download.cgi)  
+- [Apache Tomcat 10+](https://tomcat.apache.org/download-10.cgi)  
+- IDE (IntelliJ IDEA)
+
+---
+
+## ⚙️ Project Setup
+
+### 1. Clone the repository
+
+git clone https://github.com/Prashid-Dilshan/Pahana_Edu_Billing_System.git
+cd Pahana_Edu_Billing_System
+
+
+
+---
 
 ## 📂 Project Structure
 
